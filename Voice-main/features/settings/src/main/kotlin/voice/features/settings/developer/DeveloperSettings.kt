@@ -1,6 +1,9 @@
 package voice.features.settings.developer
 
 import android.content.ClipData
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ListItem
@@ -16,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.ClipEntry
 import androidx.compose.ui.platform.LocalClipboard
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.navigation3.runtime.NavEntry
 import dev.zacsweers.metro.AppScope
@@ -34,6 +38,8 @@ private fun DeveloperSettings(
   viewModel: DeveloperSettingsViewModel,
 ) {
   val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+  val context = LocalContext.current
+  
   Scaffold(
     modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
     topBar = {
@@ -51,6 +57,51 @@ private fun DeveloperSettings(
     },
   ) { contentPadding ->
     LazyColumn(contentPadding = contentPadding) {
+      // GitHub 跳转按钮
+      item {
+        ListItem(
+          headlineContent = {
+            Text("GitHub 项目主页")
+          },
+          supportingContent = {
+            Text("查看 Jinn 有声书播放器源码")
+          },
+          trailingContent = {
+            TextButton(
+              onClick = {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/yezijinn/voice-player-zh-localized"))
+                context.startActivity(intent)
+              },
+              content = {
+                Text("打开")
+              },
+            )
+          },
+        )
+      }
+
+      item {
+        ListItem(
+          headlineContent = {
+            Text("开源项目声明")
+          },
+          supportingContent = {
+            Text("原始项目 Voice by Paul Woitaschek")
+          },
+          trailingContent = {
+            TextButton(
+              onClick = {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/PaulWoitaschek/Voice"))
+                context.startActivity(intent)
+              },
+              content = {
+                Text("打开")
+              },
+            )
+          },
+        )
+      }
+
       item {
         ListItem(
           headlineContent = {

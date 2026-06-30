@@ -247,6 +247,11 @@ fun Settings() {
         SettingsViewEffect.DeveloperMenuUnlocked -> {
           snackbarHostState.showSnackbar(currentDeveloperMenuUnlockedMessage.value)
         }
+        is SettingsViewEffect.OpenGitHub -> {
+          // 使用 Intent 打开浏览器
+          val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(viewEffect.url))
+          (androidx.compose.ui.platform.LocalContext.current as android.app.Activity).startActivity(intent)
+        }
       }
     }
   }
