@@ -12,7 +12,8 @@ import os
 import shutil
 import subprocess
 import sys
-import datetime  # 新增导入
+import datetime
+import glob  # 新增用于查找 APK
 
 # ========== 项目本地路径配置 ==========
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -23,8 +24,8 @@ GRADLE_DIR = os.path.join(TOOLS_DIR, "gradle")
 ANDROID_SDK_DIR = os.path.join(TOOLS_DIR, "android-sdk")
 BUILD_DIR = os.path.join(SCRIPT_DIR, "build-temp")
 TEMP_DIR = os.path.join(SCRIPT_DIR, "kotlin-temp")
-APK_SRC = os.path.join(BUILD_DIR, "app", "build", "outputs", "apk", "free", "debug", "app-free-debug.apk")
-# 不再使用固定 APK_DST，动态生成带时间戳的名称
+# 改为动态查找，不再写死
+APK_PATTERN = os.path.join(BUILD_DIR, "app", "build", "outputs", "apk", "free", "release", "*.apk")
 
 
 def check_dependency(name, path, required_files):
@@ -130,8 +131,8 @@ def build_apk(jdk_bin, gradle_bin):
             f.write(content)
         print(f"[信息] 已配置 Gradle wrapper 使用本地 zip")
 
-    # 使用本地 Gradle 直接编译
-    cmd = [gradle_bin, "-p", BUILD_DIR, "assembleFreeDebug", "--no-daemon", "--no-build-cache"]
+    # 使用本地 Gradle 直接编译 - 改为 Release 版本
+    cmd = [gradle_bin, "-p", BUILD_DIR, "assembleFreeRelease", "--no-daemon", "--no-build-cache"]
 
     result = subprocess.run(
         cmd,
@@ -149,20 +150,30 @@ def build_apk(jdk_bin, gradle_bin):
 
 
 def copy_apk():
-    """复制 APK 到输出目录，文件名包含时间戳"""
+    """动态查找 APK 并复制到输出目录，文件名包含时间戳"""
     print()
     print("[7/6] 复制 APK 到输出目录...")
 
-    # 生成时间戳（格式：年月日_时分秒，例如 20260630_153042）
+    # 查找所有 APK 文件
+    apk_files = glob.glob(APK_PATTERN)
+    
+    if not apk_files:
+        print(f"[错误] 找不到编译生成的 APK 文件！")
+        print(f"       查找路径: {APK_PATTERN}")
+        print("       请检查编译是否成功，或确认 APK 的实际路径。")
+        sys.exit(1)
+
+    # 按修改时间排序，取最新的
+    apk_src = max(apk_files, key=os.path.getmtime)
+    print(f"[信息] 找到 APK: {os.path.basename(apk_src)}")
+
+    # 生成时间戳（格式：年月日_时分秒）
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     new_filename = f"有声书-{timestamp}.apk"
     apk_dst = os.path.join(SCRIPT_DIR, new_filename)
 
-    # 确保目标目录存在（实际就是脚本所在目录）
-    os.makedirs(os.path.dirname(apk_dst), exist_ok=True)
-
     # 复制 APK
-    shutil.copy2(APK_SRC, apk_dst)
+    shutil.copy2(apk_src, apk_dst)
     size_mb = os.path.getsize(apk_dst) / (1024 * 1024)
 
     print(f"[完成] APK 已保存到: {apk_dst}")
@@ -203,4 +214,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-	

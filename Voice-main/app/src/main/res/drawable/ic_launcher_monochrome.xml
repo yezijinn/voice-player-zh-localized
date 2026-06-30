@@ -5,13 +5,63 @@
   android:viewportWidth="108"
   android:viewportHeight="108">
 
+  <!-- 背景圆形 -->
   <path
-    android:pathData="M-21.26 64a11.9 11.9 0 0 0 22.13 0l7.92-20a11.9 11.9 0 0 1 22.12 0l7.92 20A11.9 11.9 0 0 0 61 64l7.93-20A11.9 11.9 0 0 1 91 44l7.93 20a11.9 11.9 0 0 0 22.12 0"
-    android:strokeWidth="3"
-    android:strokeColor="#fff"
-    android:strokeMiterLimit="10" />
+    android:pathData="M54,54m-44,0a44,44 0,1 1,88 0a44,44 0,1 1,-88 0"
+    android:fillColor="#1A237E" />
+
+  <!-- 书本主体 -->
   <path
-    android:pathData="M-11.91 64.5a11.9 11.9 0 0 0 22.12 0l7.93-20a11.9 11.9 0 0 1 22.12 0l7.93 20a11.9 11.9 0 0 0 22.12 0l7.93-20.05a11.9 11.9 0 0 1 22.12 0l7.93 20.06a11.9 11.9 0 0 0 22.12 0"
-    android:strokeWidth="3"
-    android:strokeColor="#fff" />
+    android:pathData="M30,38 L30,70 L54,70 L54,38 C54,38 42,32 30,38Z"
+    android:fillColor="#FFFFFF"
+    android:fillAlpha="0.9" />
+
+  <!-- 书本右页 -->
+  <path
+    android:pathData="M54,38 L54,70 L78,70 L78,38 C78,38 66,32 54,38Z"
+    android:fillColor="#FFF8E1"
+    android:fillAlpha="0.95" />
+
+  <!-- 书脊 -->
+  <path
+    android:pathData="M54,38 L54,70"
+    android:strokeWidth="2"
+    android:strokeColor="#1A237E"
+    android:strokeLineCap="round" />
+
+  <!-- 声波 - 左侧 -->
+  <path
+    android:pathData="M22,46 C18,46 18,50 22,50"
+    android:strokeWidth="2.5"
+    android:strokeColor="#FFD700"
+    android:strokeLineCap="round"
+    android:fillColor="#00000000" />
+
+  <path
+    android:pathData="M18,42 C12,42 12,54 18,54"
+    android:strokeWidth="2.5"
+    android:strokeColor="#FFD700"
+    android:strokeLineCap="round"
+    android:fillColor="#00000000" />
+
+  <!-- 声波 - 右侧 -->
+  <path
+    android:pathData="M86,46 C90,46 90,50 86,50"
+    android:strokeWidth="2.5"
+    android:strokeColor="#FFD700"
+    android:strokeLineCap="round"
+    android:fillColor="#00000000" />
+
+  <path
+    android:pathData="M90,42 C96,42 96,54 90,54"
+    android:strokeWidth="2.5"
+    android:strokeColor="#FFD700"
+    android:strokeLineCap="round"
+    android:fillColor="#00000000" />
+
+  <!-- 播放按钮三角形 -->
+  <path
+    android:pathData="M50,52 L58,56 L50,60Z"
+    android:fillColor="#FFD700" />
+
 </vector>
