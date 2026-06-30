@@ -55,6 +55,7 @@ private fun Settings(
   snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
 ) {
   val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+  val context = androidx.compose.ui.platform.LocalContext.current
   Scaffold(
     modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
     snackbarHost = {
@@ -146,6 +147,14 @@ private fun Settings(
           supportingContent = {
             Text(stringResource(StringsR.string.settings_developer_info_summary, viewState.buildTimestamp))
           },
+          trailingContent = {
+            TextButton(onClick = {
+              val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse("https://github.com/yezijinn/voice-player-zh-localized"))
+              (context as android.app.Activity).startActivity(intent)
+            }) {
+              Text("打开")
+            }
+          },
         )
       }
       item {
@@ -155,6 +164,14 @@ private fun Settings(
           },
           supportingContent = {
             Text(stringResource(StringsR.string.settings_attribution_summary))
+          },
+          trailingContent = {
+            TextButton(onClick = {
+              val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse("https://github.com/PaulWoitaschek/Voice"))
+              (context as android.app.Activity).startActivity(intent)
+            }) {
+              Text("打开")
+            }
           },
         )
       }
@@ -246,11 +263,6 @@ fun Settings() {
       when (viewEffect) {
         SettingsViewEffect.DeveloperMenuUnlocked -> {
           snackbarHostState.showSnackbar(currentDeveloperMenuUnlockedMessage.value)
-        }
-        is SettingsViewEffect.OpenGitHub -> {
-          // 使用 Intent 打开浏览器
-          val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(viewEffect.url))
-          (androidx.compose.ui.platform.LocalContext.current as android.app.Activity).startActivity(intent)
         }
       }
     }

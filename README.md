@@ -43,15 +43,15 @@
 
 | 欢迎页面 | 应用主页 |
 |:---:|:---:|
-| ![Welcome](screenshots/welcome.jpg) | ![Home](screenshots/home.jpg) |
+| ![Welcome](Voice-main/screenshots/welcome.jpg) | ![Home](Voice-main/screenshots/home.jpg) |
 
 | 播放页面 | 设置页面 |
 |:---:|:---:|
-| ![Player](screenshots/player.jpg) | ![Settings](screenshots/settings.jpg) |
+| ![Player](Voice-main/screenshots/player.jpg) | ![Settings](Voice-main/screenshots/settings.jpg) |
 
 | 定时功能 | 关于 |
 |:---:|:---:|
-| ![Timer](screenshots/timer.jpg) | ![About](screenshots/about.jpg) |
+| ![Timer](Voice-main/screenshots/timer.jpg) | ![About](Voice-main/screenshots/about.jpg) |
 
 ---
 

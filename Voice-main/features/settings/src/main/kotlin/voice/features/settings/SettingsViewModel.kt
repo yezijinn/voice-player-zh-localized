@@ -252,12 +252,4 @@ class SettingsViewModel(
   override fun openDeveloperMenu() {
     navigator.goTo(Destination.DeveloperSettings)
   }
-
-  override fun openGitHub() {
-    viewEffects.emit(SettingsViewEffect.OpenGitHub("https://github.com/yezijinn/voice-player-zh-localized"))
-  }
-
-  override fun openOriginalGitHub() {
-    viewEffects.emit(SettingsViewEffect.OpenGitHub("https://github.com/PaulWoitaschek/Voice"))
-  }
 }

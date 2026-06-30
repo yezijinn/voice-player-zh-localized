@@ -35,10 +35,6 @@ interface SettingsListener {
 
   fun openDeveloperMenu()
 
-  // GitHub 跳转
-  fun openGitHub()
-  fun openOriginalGitHub()
-
   companion object {
     fun noop() = object : SettingsListener {
       override fun close() {}
@@ -66,8 +62,6 @@ interface SettingsListener {
       override fun onSkipEndSecondsRowClick() {}
       override fun toggleSkipSilence() {}
       override fun openDeveloperMenu() {}
-      override fun openGitHub() {}
-      override fun openOriginalGitHub() {}
     }
   }
 }
