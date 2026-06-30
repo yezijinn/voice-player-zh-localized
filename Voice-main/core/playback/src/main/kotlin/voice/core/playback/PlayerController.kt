@@ -188,10 +188,6 @@ class PlayerController(
     controller.setPlaybackSpeed(speed)
   }
 
-  fun setRemainingEpisodes(count: Int) = executeAfterPrepare { controller ->
-    controller.sendCustomCommand(CustomCommand.SetRemainingEpisodes(count))
-  }
-
   fun setGain(gain: Decibel) = executeAfterPrepare { controller ->
     controller.sendCustomCommand(CustomCommand.SetGain(gain))
   }

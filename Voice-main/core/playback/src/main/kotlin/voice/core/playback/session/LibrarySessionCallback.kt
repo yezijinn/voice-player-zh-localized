@@ -214,9 +214,6 @@ class LibrarySessionCallback(
       is CustomCommand.SetGain -> {
         player.setGain(command.gain)
       }
-      is CustomCommand.SetRemainingEpisodes -> {
-        player.remainingEpisodes = command.count
-      }
     }
 
     return Futures.immediateFuture(SessionResult(SessionResult.RESULT_SUCCESS))

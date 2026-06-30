@@ -66,12 +66,6 @@ class VoicePlayer(
     }
   }
 
-  /**
-   * 剩余集数。当大于0时，表示定集关闭功能已启用。
-   * 当剩余集数为1时，片尾跳过不会跳到下一集，而是暂停播放。
-   */
-  var remainingEpisodes: Int = 0
-
   init {
     player.addListener(skipListener)
     startSkipEndMonitor()
@@ -101,24 +95,13 @@ class VoicePlayer(
     val skipEndMs = skipEnd * 1000L
     val remaining = duration - currentPosition
     if (remaining in 1..skipEndMs) {
-      if (remainingEpisodes == 1) {
-        // 定集关闭只剩最后一集：暂停播放，不跳到下一集
-        Logger.d("Skipping outro: remainingEpisodes=1, pausing playback")
-        player.pause()
+      val nextIndex = currentIndex + 1
+      if (nextIndex < player.mediaItemCount) {
+        Logger.d("Skipping outro: moving to chapter $nextIndex (remaining=${remaining}ms)")
+        player.seekTo(nextIndex, 0)
       } else {
-        val nextIndex = currentIndex + 1
-        if (nextIndex < player.mediaItemCount) {
-          Logger.d("Skipping outro: moving to chapter $nextIndex (remaining=${remaining}ms)")
-          // 定集关闭：跳到下一集时递减剩余集数
-          if (remainingEpisodes > 1) {
-            remainingEpisodes--
-            Logger.d("Skipping outro: remainingEpisodes decremented to $remainingEpisodes")
-          }
-          player.seekTo(nextIndex, 0)
-        } else {
-          Logger.d("Skipping outro: last chapter, pausing playback")
-          player.pause()
-        }
+        Logger.d("Skipping outro: last chapter, pausing playback")
+        player.pause()
       }
     }
   }

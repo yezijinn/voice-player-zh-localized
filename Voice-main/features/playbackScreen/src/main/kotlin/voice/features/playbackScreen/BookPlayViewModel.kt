@@ -164,11 +164,6 @@ class BookPlayViewModel(
     val currentChapterFlatIndex = book.chapters.takeWhile { it != book.currentChapter }
       .sumOf { it.chapterMarks.count() } + book.currentChapter.chapterMarks.indexOf(book.currentMark)
 
-    // 定集关闭：同步剩余集数到 VoicePlayer
-    LaunchedEffect(episodeCountdown) {
-      player.setRemainingEpisodes(episodeCountdown)
-    }
-
     // 最后一集检测：如果当前是最后一集且定时开启，播放完成后自动关闭定时
     val totalChapters = book.chapters.sumOf { it.chapterMarks.count() }
     val isLastChapter = currentChapterFlatIndex >= totalChapters - 1
@@ -253,10 +248,28 @@ class BookPlayViewModel(
       if (sleepTimer.state.value.enabled) {
         sleepTimer.disable()
       }
-      val currentChapterFlatIndex = book.chapters.takeWhile { it != book.currentChapter }
-        .sumOf { it.chapterMarks.count() } + book.currentChapter.chapterMarks.indexOf(book.currentMark)
+      // 获取实时播放位置（优先使用播放器实时位置，而非持久化位置）
+      val liveState = player.livePlaybackState(bookId)
+      val currentPositionInChapter = liveState?.positionMs ?: book.content.positionInChapter
+      
+      // 计算当前位置到目标集数的总时长
+      val currentChapterIndex = book.content.currentChapterIndex
+      val currentChapterDuration = book.chapters[currentChapterIndex].duration
+      val remainingInCurrentChapter = (currentChapterDuration - currentPositionInChapter).coerceAtLeast(0L)
+
+      // 计算后续 chapters 的总时长
+      var totalDurationMs = remainingInCurrentChapter
+      for (i in 1 until count) {
+        val chapterIndex = currentChapterIndex + i
+        if (chapterIndex < book.chapters.size) {
+          totalDurationMs += book.chapters[chapterIndex].duration
+        }
+      }
+
+      // 转为分钟并启用定时
+      val totalMinutes = (totalDurationMs / 1000 / 60).toInt().coerceAtLeast(1)
+      sleepTimer.enable(SleepTimerMode.TimedWithDuration(totalMinutes.minutes))
       episodeCountdown = count
-      lastChapterIndex = currentChapterFlatIndex
       showSleepTimerDialog.value = false
     }
   }

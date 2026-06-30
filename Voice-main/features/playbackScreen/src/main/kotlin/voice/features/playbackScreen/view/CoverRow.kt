@@ -40,19 +40,5 @@ internal fun CoverRow(
         color = Color.White,
       )
     }
-    if (episodeCountdown > 0) {
-      Text(
-        modifier = Modifier
-          .align(Alignment.TopEnd)
-          .padding(top = 8.dp, end = 8.dp)
-          .background(
-            color = Color(0x7E000000),
-            shape = RoundedCornerShape(20.dp),
-          )
-          .padding(horizontal = 20.dp, vertical = 16.dp),
-        text = "剩余${episodeCountdown}集",
-        color = Color.White,
-      )
-    }
   }
 }
