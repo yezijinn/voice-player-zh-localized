@@ -39,6 +39,22 @@
 
 ---
 
+## 📸 截图展示
+
+| 欢迎页面 | 应用主页 |
+|:---:|:---:|
+| ![Welcome](screenshots/welcome.jpg) | ![Home](screenshots/home.jpg) |
+
+| 播放页面 | 设置页面 |
+|:---:|:---:|
+| ![Player](screenshots/player.jpg) | ![Settings](screenshots/settings.jpg) |
+
+| 定时功能 | 关于 |
+|:---:|:---:|
+| ![Timer](screenshots/timer.jpg) | ![About](screenshots/about.jpg) |
+
+---
+
 ## 📥 下载安装
 
 ### 方式一：下载预编译 APK
