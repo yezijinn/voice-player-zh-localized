@@ -1,58 +1,78 @@
-# Voice
+# 有声书播放器（中文本地化版）
 
-[![CI](https://github.com/PaulWoitaschek/Voice/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/PaulWoitaschek/Voice/actions/workflows/ci.yml)
-[![Translation status](https://hosted.weblate.org/widgets/voice/-/svg-badge.svg)](https://hosted.weblate.org/engage/voice/)
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://voice.woitaschek.de/license/)
+[![License](https://img.shields.io/badge/License-GPL--3.0-blue.svg)](LICENSE.md)
+[![Platform](https://img.shields.io/badge/Platform-Android-green.svg)](https://developer.android.com)
 
-**A minimalistic, user-focused audiobook player for Android, built for reliability and simplicity.**
+> 基于 [Voice](https://github.com/PaulWoitaschek/Voice) 开源项目的二次开发版本，针对中文用户进行了全面本地化。
 
-Voice turns your own audiobook files into a calm, focused listening library. It remembers where you stopped, keeps playback controls close, and includes the audiobook-specific details that generic music players miss: chapter navigation, sleep timer, bookmarks, playback speed, silence skipping, and auto-rewind after pauses.
+## 功能特性
 
-<p align="center">
-  <img alt="Voice library view" width="30%" src="fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png" />
-  <img alt="Voice player view" width="30%" src="fastlane/metadata/android/en-US/images/phoneScreenshots/2_en-US.png" />
-  <img alt="Voice sleep timer" width="30%" src="fastlane/metadata/android/en-US/images/phoneScreenshots/3_en-US.png" />
-</p>
+- **中文界面**：100% 中文本地化
+- **定时关闭**：支持按时间定时停止播放
+- **定集关闭**：支持按集数自动停止播放
+- **跳过片头片尾**：支持设置跳过时长，自动跳过片头片尾
+- **应用版本**：自动取当前年月日作为版本号
 
-## Why Voice?
+## 下载安装
 
-- **Made for your files:** Add a folder once and Voice organizes your local M4B, MP3, M4A, OGG, OGA, and OPUS audiobooks.
-- **Built for listening:** Resume positions, bookmarks, sleep timer fade-out, volume boost, speed control, and Android Auto support are part of the core experience.
-- **Private and uncluttered:** No account, no ads, no forced cloud sync. Your library stays on your device.
+### 编译环境
 
-## Download
+| 依赖 | 版本 | 下载链接 |
+|------|------|----------|
+| JDK | 25 | [Temurin JDK 25](https://github.com/adoptium/temurin25-binaries/releases) |
+| Gradle | 9.6.1 | [Gradle 9.6.1](https://services.gradle.org/distributions/gradle-9.6.1-all.zip) |
+| Android SDK | API 37 | [Android Command Line Tools](https://developer.android.com/studio#command-tools) |
 
-<a href="https://play.google.com/store/apps/details?id=de.ph1b.audiobook">
-  <img alt="Get it on Google Play"
-       height="70"
-       src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" />
-</a>
-<a href="https://f-droid.org/packages/de.ph1b.audiobook/">
-  <img alt="Get it on F-Droid"
-       height="70"
-       src="https://f-droid.org/badge/get-it-on.png" />
-</a>
+### 一键打包
 
-## Learn more
+```bash
+python 一键打包.py
+```
 
-The [documentation website](https://voice.woitaschek.de) covers features, the philosophy behind the app, how to organize your library, and the FAQ.
+所有依赖（JDK、Gradle、Android SDK）需安装到项目本地 `tools/` 目录。
 
-## Contributing
+## 项目结构
 
-Contributions are very welcome: code, translations, bug reports, or ideas. Start with [Development](https://voice.woitaschek.de/development/) and [Architecture](https://voice.woitaschek.de/architecture/), or help translate Voice on [Weblate](https://hosted.weblate.org/engage/voice/).
+```
+Voice-main/
+├── app/                    # 主应用模块
+├── core/                   # 核心模块
+│   ├── common/            # 通用工具
+│   ├── data/              # 数据层
+│   ├── playback/          # 播放引擎
+│   ├── scanner/           # 媒体扫描
+│   ├── search/            # 搜索功能
+│   ├── sleeptimer/        # 定时功能
+│   └── ui/                # UI 组件
+├── features/               # 功能模块
+│   ├── bookOverview/      # 书籍概览
+│   ├── bookmark/          # 书签功能
+│   ├── cover/             # 封面处理
+│   ├── folderPicker/      # 文件夹选择
+│   ├── playbackScreen/    # 播放界面
+│   ├── settings/          # 设置界面
+│   ├── sleepTimer/        # 定时界面
+│   └── widget/            # 桌面小部件
+└── plugins/                # Gradle 插件
+```
 
-## Support Voice
+## 自定义修改
 
-Voice is free and built in spare time. If it has been useful to you, consider chipping in. One-time or monthly, no sign-up required:
+- [自定义修改UI指南](自定义修改UI指南.md)
+- [开发文档](开发文档.md)
 
-<a href="https://ko-fi.com/paul_voice">
-  <img alt="Support on Ko-fi"
-       height="50"
-       src="https://storage.ko-fi.com/cdn/brandasset/v2/support_me_on_kofi_dark.png" />
-</a>
+## 技术栈
 
-You can also [sponsor on GitHub](https://github.com/sponsors/PaulWoitaschek) if you prefer.
+- **语言**：Kotlin
+- **UI 框架**：Jetpack Compose
+- **依赖注入**：Metro
+- **数据库**：Room
+- **媒体播放**：ExoPlayer
 
-## License
+## 许可证
 
-Voice is licensed under [GNU GPLv3](https://voice.woitaschek.de/license/). By contributing, you agree to license your code under the same terms.
+本项目基于 [GPL-3.0](LICENSE.md) 许可证开源。
+
+## 致谢
+
+- 原始项目：[Voice](https://github.com/PaulWoitaschek/Voice) by Paul Woitaschek
