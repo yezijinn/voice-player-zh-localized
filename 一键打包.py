@@ -79,6 +79,8 @@ def sync_source():
                 shutil.rmtree(item_path, ignore_errors=True)
             else:
                 os.remove(item_path)
+    
+    # 同步源代码（包含 signing 目录用于签名）
     shutil.copytree(
         PROJECT_DIR,
         BUILD_DIR,

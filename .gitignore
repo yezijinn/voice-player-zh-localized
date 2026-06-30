@@ -11,9 +11,9 @@ local.properties
 .DS_Store
 Thumbs.db
 
-# 忽略签名文件（重要：不要上传到GitHub）
-Voice-main/signing/*.jks
-Voice-main/signing/*.keystore
-Voice-main/signing/signing.properties
+# 签名文件说明：
+# signing/*.jks 和 signing.properties 已添加到 .gitignore，不会推送到 GitHub
+# 这些文件仅用于本地编译，请确保本地存在这些文件
+
+# 备份目录不推送到 GitHub
 Voice-main/signing/backup/
-!Voice-main/signing/.gitignore
