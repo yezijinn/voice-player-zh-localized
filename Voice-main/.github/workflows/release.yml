@@ -1,0 +1,96 @@
+name: Release
+
+on:
+  workflow_dispatch: { }
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+          persist-credentials: true
+
+      - name: Ensure release runs from default branch
+        if: github.ref_name != github.event.repository.default_branch
+        run: |
+          echo "Release must be dispatched from the default branch (${{ github.event.repository.default_branch }}); got ${GITHUB_REF_NAME}." >&2
+          exit 1
+
+      - name: Determine release tag
+        id: tag
+        run: ./scripts/determine_release_tag.main.kts
+
+      - uses: ./.github/actions/build_setup
+
+      - name: Setup Signing
+        env:
+          PLAY_SIGNING_KEYSTORE: ${{ secrets.PLAY_SIGNING_KEYSTORE }}
+          GITHUB_SIGNING_KEYSTORE: ${{ secrets.GH_SIGNING_KEYSTORE }}
+          GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES }}
+        run: ./scripts/ci_signing_setup.sh
+
+      - name: Setup Play Access
+        env:
+          PLAY_SERVICE_ACCOUNT: ${{ secrets.PLAY_SERVICE_ACCOUNT }}
+        run: ./scripts/ci_setup_play_access.sh
+
+      - name: Build Play AAB
+        env:
+          PLAY_SIGNING_STORE_PASSWORD: ${{ secrets.PLAY_SIGNING_STORE_PASSWORD }}
+          PLAY_SIGNING_KEY_ALIAS: ${{ secrets.PLAY_SIGNING_KEY_ALIAS }}
+          PLAY_SIGNING_KEY_PASSWORD: ${{ secrets.PLAY_SIGNING_KEY_PASSWORD }}
+        run: |
+          ./gradlew :app:bundlePlayRelease \
+            -Pvoice.versionName="${{ steps.tag.outputs.version_name }}" \
+            -Pvoice.versionCode="${{ steps.tag.outputs.version_code }}" \
+            -Pandroid.injected.signing.store.file="$PWD/signing/play/signing.keystore" \
+            -Pandroid.injected.signing.store.password="$PLAY_SIGNING_STORE_PASSWORD" \
+            -Pandroid.injected.signing.key.alias="$PLAY_SIGNING_KEY_ALIAS" \
+            -Pandroid.injected.signing.key.password="$PLAY_SIGNING_KEY_PASSWORD"
+          mkdir -p artifacts
+          cp app/build/outputs/bundle/playRelease/app-play-release.aab artifacts/app-play-release.aab
+
+      - name: Upload to INTERNAL
+        run: fastlane android upload_internal aab_path:artifacts/app-play-release.aab
+
+      - name: Promote INTERNAL -> PRODUCTION (0.1%)
+        run: fastlane android promote version_code:${{ steps.tag.outputs.version_code }}
+
+      - name: Build GitHub APKs
+        env:
+          GITHUB_SIGNING_STORE_PASSWORD: ${{ secrets.GH_SIGNING_STORE_PASSWORD }}
+          GITHUB_SIGNING_KEY_ALIAS: ${{ secrets.GH_SIGNING_KEY_ALIAS }}
+          GITHUB_SIGNING_KEY_PASSWORD: ${{ secrets.GH_SIGNING_KEY_PASSWORD }}
+        run: |
+          ./gradlew :app:assembleFreeRelease \
+            -Pvoice.versionName="${{ steps.tag.outputs.version_name }}" \
+            -Pvoice.versionCode="${{ steps.tag.outputs.version_code }}" \
+            -Pandroid.injected.signing.store.file="$PWD/signing/free/signing.keystore" \
+            -Pandroid.injected.signing.store.password="$GITHUB_SIGNING_STORE_PASSWORD" \
+            -Pandroid.injected.signing.key.alias="$GITHUB_SIGNING_KEY_ALIAS" \
+            -Pandroid.injected.signing.key.password="$GITHUB_SIGNING_KEY_PASSWORD"
+          mkdir -p artifacts
+          cp app/build/outputs/apk/free/release/app-free-release.apk artifacts/app-free-release.apk
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ steps.tag.outputs.tag }}" \
+            artifacts/*.apk \
+            --draft \
+            --generate-notes \
+            --target "$GITHUB_SHA"

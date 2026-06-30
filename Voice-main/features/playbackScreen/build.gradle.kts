@@ -1,0 +1,24 @@
+plugins {
+  id("voice.library")
+  id("voice.compose")
+  alias(libs.plugins.metro)
+}
+
+dependencies {
+  implementation(projects.navigation)
+  implementation(projects.core.common)
+  implementation(projects.core.strings)
+  implementation(projects.core.playback)
+  implementation(projects.core.data.api)
+  implementation(projects.core.featureflag)
+  implementation(projects.core.ui)
+  implementation(projects.core.sleeptimer.api)
+  implementation(projects.features.sleepTimer)
+
+  implementation(libs.coil)
+  implementation(libs.androidxCore)
+  implementation(libs.navigation3.ui)
+
+  testImplementation(libs.molecule)
+  testImplementation(libs.turbine)
+}

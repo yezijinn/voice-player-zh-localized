@@ -1,0 +1,36 @@
+Voice on lihtne heliraamatute kuulamisrakendus neile, kes kasutavad oma raamatufaile.
+
+Lisa oma heliraamatute kaust üks kord ja Voice muudab su kohalikud helifailid lihtsaks raamatukoguks. Rakendus mäletab iga raamatu lugemiskohta, hoiab taasesitusnupud käepärast ja ei sega sind.
+
+<b>Loodud audioraamatute jaoks</b>
+
+• Jätka täpselt sealt, kus pooleli jäid
+• Unetaimer sujuva helivaljuse vähendamisega
+• Võimalus peatuda praeguse peatüki lõppedes
+• Raputamine lükkab taimerit edasi
+• Taasesituse kiiruse kohendamine
+• Valjuse suurendamine vaiksete salvestuste puhul
+• Vaikuse vahelejätmise võimalus
+• Automaatne tagasikerimine pärast pikemaid pause
+• Järjehoidjad koos ajamärkide ja sinu lisatud nimedega
+• Otsing pealkirja ja autori järgi
+• Filtrid, mille valikuteks on kuulamisel, lõpetatud ja alustamata heliraamatud
+• Loendi- ja ruudustikuvaated
+• Kaanepilt lõimitud piltidest, kohalikest failidest või veebist otsides
+• Avakuva vidin, meediumiteated ja Android Auto tugi
+
+<b>Laadi üles oma failid</b>
+
+Voice toimib DRM-vabade heliraamatufailidega, nagu M4B, MP3, M4A, OGG, OGA ja OPUS. Hoia oma raamatuid kaustades just nii, nagu soovid; Voice tunneb need ära ja korraldab su raamatukogu loogilisel viisil.
+
+<b>Ei mingit müra</b>
+
+• Kasutajakontot ei ole vaja
+• Ei mingeid reklaame
+• Pole sundkorras pilvesünkroonimist
+• Täisfunktsionaalsus on saadaval ilma tasuliste lisateenusteta
+
+Voice on avatud lähtekoodiga tarkvara, mis on avaldatud GNU GPLv3 litsentsi alusel.
+
+Tagasiside ja veateated:
+https://github.com/PaulWoitaschek/Voice/issues

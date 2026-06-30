@@ -1,0 +1,12 @@
+# 忽略1GB编译环境
+tools/
+# 忽略编译缓存
+build-temp/
+kotlin-temp/
+.gradle-home/
+.idea/
+*.iml
+local.properties
+# 忽略系统文件
+.DS_Store
+Thumbs.db

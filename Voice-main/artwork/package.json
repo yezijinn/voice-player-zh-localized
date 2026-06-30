@@ -1,0 +1,20 @@
+{
+  "name": "voice-artwork",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "render": "tsx src/render/render-icon.ts && tsx src/render/render.ts",
+    "render:icon": "tsx src/render/render-icon.ts"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^24.0.0",
+    "js-yaml": "^5.0.0",
+    "playwright": "^1.49.1",
+    "sharp": "^0.35.0",
+    "tsx": "^4.19.2",
+    "typescript": "^6.0.0",
+    "vite": "^8.0.0"
+  }
+}

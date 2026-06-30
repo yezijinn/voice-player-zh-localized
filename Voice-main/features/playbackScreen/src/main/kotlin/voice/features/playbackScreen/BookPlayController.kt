@@ -1,0 +1,113 @@
+package voice.features.playbackScreen
+
+import android.content.res.Configuration.ORIENTATION_LANDSCAPE
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.retain.retain
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
+import androidx.navigation3.runtime.NavEntry
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesTo
+import dev.zacsweers.metro.IntoSet
+import dev.zacsweers.metro.Provides
+import voice.core.common.rootGraphAs
+import voice.core.data.BookId
+import voice.features.playbackScreen.view.BookPlayView
+import voice.features.sleepTimer.SleepTimerDialog
+import voice.navigation.Destination
+import voice.navigation.NavEntryProvider
+import voice.core.strings.R as StringsR
+
+@Composable
+fun BookPlayScreen(bookId: BookId) {
+  val viewModel = retain(bookId.value) {
+    rootGraphAs<BookPlayGraph>()
+      .bookPlayViewModelFactory
+      .create(bookId)
+  }
+  val snackbarHostState = remember { SnackbarHostState() }
+  val dialogState = viewModel.dialogState.value
+  val viewState = viewModel.viewState()
+    ?: return
+  val bookmarkAddedMessage = stringResource(StringsR.string.bookmark_added_snackbar)
+  val batteryOptimizationMessage = stringResource(StringsR.string.playback_battery_optimization_rationale)
+  val batteryOptimizationAction = stringResource(StringsR.string.playback_battery_optimization_action)
+  LaunchedEffect(viewModel) {
+    viewModel.viewEffects.collect { viewEffect ->
+      when (viewEffect) {
+        BookPlayViewEffect.BookmarkAdded -> {
+          snackbarHostState.showSnackbar(message = bookmarkAddedMessage)
+        }
+        BookPlayViewEffect.RequestIgnoreBatteryOptimization -> {
+          val result = snackbarHostState.showSnackbar(
+            message = batteryOptimizationMessage,
+            duration = SnackbarDuration.Long,
+            actionLabel = batteryOptimizationAction,
+          )
+          if (result == SnackbarResult.ActionPerformed) {
+            viewModel.onBatteryOptimizationRequested()
+          }
+        }
+      }
+    }
+  }
+  BookPlayView(
+    viewState,
+    bookId = bookId,
+    onPlayClick = viewModel::playPause,
+    onSeek = viewModel::seekTo,
+    onBookmarkClick = viewModel::onBookmarkClick,
+    onBookmarkLongClick = viewModel::onBookmarkLongClick,
+    onSettingsClick = viewModel::onSettingsClick,
+    onSleepTimerClick = viewModel::toggleSleepTimer,
+    onSpeedChangeClick = viewModel::onPlaybackSpeedIconClick,
+    onCloseClick = viewModel::onCloseClick,
+    onSkipToNext = viewModel::next,
+    onSkipToPrevious = viewModel::previous,
+    onCurrentChapterClick = viewModel::onCurrentChapterClick,
+    useLandscapeLayout = LocalConfiguration.current.orientation == ORIENTATION_LANDSCAPE,
+    snackbarHostState = snackbarHostState,
+  )
+  if (dialogState != null) {
+    when (dialogState) {
+      is BookPlayDialogViewState.SpeedDialog -> {
+        SpeedDialog(dialogState, viewModel)
+      }
+      is BookPlayDialogViewState.VolumeGainDialog -> {
+        VolumeGainDialog(dialogState, viewModel)
+      }
+      is BookPlayDialogViewState.SelectChapterDialog -> {
+        SelectChapterDialog(dialogState, viewModel)
+      }
+    }
+  }
+  if (viewModel.showSleepTimerDialog.value) {
+    SleepTimerDialog(
+      onDismiss = { viewModel.showSleepTimerDialog.value = false },
+      onAcceptSleepTimer = viewModel::onAcceptSleepTimer,
+      onAcceptSleepEpisodeCount = viewModel::onAcceptSleepEpisodeCount,
+    )
+  }
+}
+
+@ContributesTo(AppScope::class)
+interface BookPlayGraph {
+  val bookPlayViewModelFactory: BookPlayViewModel.Factory
+}
+
+@ContributesTo(AppScope::class)
+interface BookPlayProvider {
+
+  @Provides
+  @IntoSet
+  fun bookPlayNavEntryProvider(): NavEntryProvider<*> = NavEntryProvider<Destination.Playback> { key ->
+    NavEntry(key) {
+      BookPlayScreen(bookId = key.bookId)
+    }
+  }
+}

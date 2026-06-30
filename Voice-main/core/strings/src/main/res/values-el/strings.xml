@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="book.category.action.mark_completed">Επισήμανση ως ολοκληρωμένο</string>
+    <string name="book.category.action.mark_current">Επισήμανση ως τρέχον</string>
+    <string name="book.category.action.mark_not_started">Επισήμανση ως μη διαβασμένου</string>
+    <string name="book.delete.bottom_sheet.title">Διαγραφή Βιβλίου</string>
+    <string name="book.delete.dialog.confirm_files">Διαγραφή των αρχείων μου</string>
+    <string name="book.delete.dialog.message">Αυτό θα διαγράψει τα αρχεία στη συσκευή σας.</string>
+    <string name="book.delete.dialog.title">Διαγραφή Βιβλίου</string>
+    <string name="book.edit.cover.file">Εξώφυλλο από αρχεία του συστήματος</string>
+    <string name="book.edit.cover.internet">Εξώφυλλο από το Διαδίκτυο</string>
+    <string name="book.edit.name.label">Όνομα</string>
+    <string name="book.edit.title">Επεξεργασία βιβλίου</string>
+    <string name="bookmark.added.snackbar">Ο σελιδοδείκτης προστέθηκε</string>
+    <string name="bookmark.created.just_now">Ακριβώς τώρα</string>
+    <string name="bookmark.edit.name.label">Όνομα σελιδοδείκτη</string>
+    <string name="bookmark.edit.title">Επεξεργασία σελιδοδείκτη</string>
+    <string name="bookmark.title">Σελιδοδείκτης</string>
+    <string name="common.action.add">Προσθήκη</string>
+    <string name="common.action.close">Κλείσιμο</string>
+    <string name="common.action.delete">Διαγραφή</string>
+    <string name="common.action.edit">Επεξεργασία</string>
+    <string name="common.action.more">Περισσότερα</string>
+    <string name="common.action.remove">Αφαίρεση</string>
+    <string name="common.dialog.cancel">Ακύρωση</string>
+    <string name="common.dialog.confirm">Ορισμός</string>
+    <string name="common.error.generic.message">Κάτι πήγε στραβά 😢</string>
+    <string name="common.error.generic.retry">Ξαναδοκιμάστε</string>
+    <string name="cover.content_description.selectable">Εμφανίζει εξώφυλλο για να επιλέξετε</string>
+    <string name="cover.title">Εξώφυλλο</string>
+    <plurals name="duration.seconds">
+        <item quantity="one">%d δευτερόλεπτο</item>
+        <item quantity="other">%d δευτερόλεπτα</item>
+    </plurals>
+    <string name="folder.mode.root.title">Αρχικός φάκελος βιβλίων. Ένας υποφάκελος = ένα βιβλίο.</string>
+    <string name="folder.mode.single.title">Φάκελος ενός βιβλίου</string>
+    <string name="folder.type.book_example.empty">Το Voice δεν μπόρεσε να εντοπίσει βιβλία. Υπάρχουν αρχεία ήχου;</string>
+    <string name="folder.type.book_example.header">Αυτό θα οδηγήσει στον εντοπισμό των παρακάτω βιβλίων</string>
+    <plurals name="folder.type.file_count">
+        <item quantity="one">%d αρχείο ήχου</item>
+        <item quantity="other">%d αρχεία ήχου</item>
+    </plurals>
+    <string name="folder.type.title">Πώς είναι δομημένα τα αρχεία σας;</string>
+    <string name="library.category.completed.title">Ολοκληρωμένα</string>
+    <string name="library.category.current.title">Τρέχον</string>
+    <string name="library.category.not_started.title">Μη διαβασμένα</string>
+    <string name="library.empty.add_first_book">Ας προσθέσουμε το φάκελο των ηχητικών βιβλίων για να αρχίσετε την ακρόαση!</string>
+    <string name="library.folders.title">Φάκελοι Audiobook</string>
+    <string name="library.search.hint">Τι ψάχνετε;</string>
+    <string name="media_session.library.recent">Πρόσφατα</string>
+    <string name="media_session.library.root">Όλα τα ηχητικά βιβλία</string>
+    <string name="playback.action.fast_forward">Γρήγορη προώθηση</string>
+    <string name="playback.action.pause">Παύση</string>
+    <string name="playback.action.play">Αναπαραγωγή</string>
+    <string name="playback.action.play_pause">Αναπαραγωγή / Παύση</string>
+    <string name="playback.action.rewind">Επανάληψη</string>
+    <string name="playback.battery_optimization.action">Αλλαγή</string>
+    <string name="playback.battery_optimization.rationale">Λόγω των περιορισμών χρήσης μπαταρίας, ενδέχεται να υπάρξουν διακοπές στην αναπαραγωγή.</string>
+    <string name="playback.chapter.next">Επόμενο κομμάτι</string>
+    <string name="playback.chapter.previous">Προηγούμενο κομμάτι</string>
+    <string name="playback.option.skip_silence">Παράλειψη ησυχίας</string>
+    <string name="playback.option.volume_boost">Ενίσχυση έντασης</string>
+    <string name="playback.speed.title">Ταχύτητα αναπαραγωγής</string>
+    <string name="settings.about.app_version.title">Έκδοση εφαρμογής</string>
+    <string name="settings.action.open">Προτιμήσεις</string>
+    <string name="settings.library.use_grid.title">Χρήση πλέγματος</string>
+    <string name="settings.playback.auto_rewind.title">Αυτόματη αναζήτηση προς τα πίσω</string>
+    <string name="settings.playback.seek_time.title">Χρονική μετακίνηση</string>
+    <string name="settings.support.get_support.title">Λήψη υποστήριξης</string>
+    <string name="settings.support.help_translating.title">Βοήθεια στη μετάφραση του Voice</string>
+    <string name="settings.support.report_issue.title">Αναφορά προβλήματος</string>
+    <string name="settings.support.suggest_idea.title">Προτείνετε μια ιδέα</string>
+    <string name="shortcut.play_current.short_label">Αναπαραγωγή τρέχοντος</string>
+    <string name="sleep_timer.action.open">Χρονοδιακόπτης ύπνου</string>
+</resources>

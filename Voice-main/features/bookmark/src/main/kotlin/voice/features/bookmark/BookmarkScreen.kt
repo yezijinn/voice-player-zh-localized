@@ -1,0 +1,279 @@
+package voice.features.bookmark
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.SwipeToDismissBoxValue
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.rememberSwipeToDismissBoxState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.retain.retain
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.navigation3.runtime.NavEntry
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesTo
+import dev.zacsweers.metro.IntoSet
+import dev.zacsweers.metro.Provides
+import voice.core.common.rootGraphAs
+import voice.core.data.BookId
+import voice.core.data.Bookmark
+import voice.features.bookmark.dialogs.AddBookmarkDialog
+import voice.features.bookmark.dialogs.EditBookmarkDialog
+import voice.navigation.Destination
+import voice.navigation.NavEntryProvider
+import kotlin.uuid.Uuid
+import voice.core.strings.R as StringsR
+
+@ContributesTo(AppScope::class)
+interface Graph {
+  val bookmarkViewModelFactory: BookmarkViewModel.Factory
+}
+
+@ContributesTo(AppScope::class)
+interface BookmarkProvider {
+
+  @Provides
+  @IntoSet
+  fun bookmarkNavEntryProvider(): NavEntryProvider<*> = NavEntryProvider<Destination.Bookmarks> { key ->
+    NavEntry(key) {
+      BookmarkScreen(bookId = key.bookId)
+    }
+  }
+}
+
+@Composable
+fun BookmarkScreen(bookId: BookId) {
+  val viewModel = retain(bookId.value) {
+    rootGraphAs<Graph>().bookmarkViewModelFactory.create(bookId)
+  }
+  val viewState = viewModel.viewState()
+  BookmarkScreen(
+    viewState = viewState,
+    onClose = viewModel::closeScreen,
+    onAdd = viewModel::onAddClick,
+    onDelete = viewModel::deleteBookmark,
+    onEdit = viewModel::onEditClick,
+    onScrollConfirm = viewModel::onScrollConfirm,
+    onClick = viewModel::selectBookmark,
+    onNewBookmarkNameChoose = viewModel::addBookmark,
+    onCloseDialog = viewModel::closeDialog,
+    onEditBookmark = viewModel::editBookmark,
+  )
+}
+
+@Composable
+internal fun BookmarkScreen(
+  viewState: BookmarkViewState,
+  onClose: () -> Unit,
+  onAdd: () -> Unit,
+  onDelete: (Bookmark.Id) -> Unit,
+  onEdit: (Bookmark.Id) -> Unit,
+  onScrollConfirm: () -> Unit,
+  onClick: (Bookmark.Id) -> Unit,
+  onCloseDialog: () -> Unit,
+  onNewBookmarkNameChoose: (String) -> Unit,
+  onEditBookmark: (Bookmark.Id, String) -> Unit,
+  modifier: Modifier = Modifier,
+) {
+  val snackbarHostState = remember { SnackbarHostState() }
+
+  Scaffold(
+    modifier = modifier,
+    snackbarHost = {
+      SnackbarHost(hostState = snackbarHostState)
+    },
+    topBar = {
+      TopAppBar(
+        title = { Text(text = stringResource(id = StringsR.string.bookmark_title)) },
+        navigationIcon = {
+          TextButton(onClick = onClose) {
+            Text(stringResource(id = StringsR.string.common_action_close))
+          }
+        },
+      )
+    },
+    floatingActionButton = {
+      Button(
+        onClick = onAdd,
+      ) {
+        Text(stringResource(id = StringsR.string.common_action_add))
+      }
+    },
+  ) { paddingValues ->
+    val lazyListState = rememberLazyListState()
+    LaunchedEffect(viewState.shouldScrollTo, onScrollConfirm) {
+      val index = viewState.bookmarks.indexOfFirst { it.id == viewState.shouldScrollTo }
+      if (index != -1) {
+        lazyListState.animateScrollToItem(index)
+        onScrollConfirm()
+      }
+    }
+    LazyColumn(
+      state = lazyListState,
+      contentPadding = paddingValues,
+    ) {
+      items(
+        items = viewState.bookmarks,
+        key = { it.id.value.toString() },
+      ) { bookmark ->
+        BookmarkItem(
+          modifier = Modifier.animateItem(),
+          bookmark = bookmark,
+          onDelete = onDelete,
+          onEdit = onEdit,
+          onClick = onClick,
+        )
+      }
+      item {
+        Spacer(Modifier.size(88.dp))
+      }
+    }
+  }
+
+  when (viewState.dialogViewState) {
+    BookmarkDialogViewState.AddBookmark -> {
+      AddBookmarkDialog(
+        onDismissRequest = onCloseDialog,
+        onBookmarkNameChoose = onNewBookmarkNameChoose,
+      )
+    }
+    BookmarkDialogViewState.None -> {
+    }
+    is BookmarkDialogViewState.EditBookmark -> {
+      EditBookmarkDialog(
+        onDismissRequest = onCloseDialog,
+        onEditBookmark = onEditBookmark,
+        bookmarkId = viewState.dialogViewState.id,
+        initialTitle = viewState.dialogViewState.title ?: "",
+      )
+    }
+  }
+}
+
+@Composable
+internal fun BookmarkItem(
+  bookmark: BookmarkItemViewState,
+  onDelete: (Bookmark.Id) -> Unit,
+  onEdit: (Bookmark.Id) -> Unit,
+  onClick: (Bookmark.Id) -> Unit,
+  modifier: Modifier = Modifier,
+) {
+  var expanded by remember { mutableStateOf(false) }
+  SwipeToDismissBox(
+    modifier = modifier,
+    onDismiss = {
+      if (it == SwipeToDismissBoxValue.StartToEnd) {
+        onDelete(bookmark.id)
+      }
+    },
+    enableDismissFromEndToStart = false,
+    backgroundContent = {
+      Box(
+        Modifier
+          .fillMaxSize()
+          .background(Color.Red),
+      ) {
+        Text(
+          modifier = Modifier
+            .padding(start = 16.dp)
+            .align(Alignment.CenterStart),
+          text = stringResource(id = StringsR.string.common_action_delete),
+          color = Color.White,
+          fontWeight = FontWeight.Bold,
+        )
+      }
+    },
+    state = rememberSwipeToDismissBoxState(),
+    content = {
+      ListItem(
+        modifier = Modifier
+          .clickable {
+            onClick(bookmark.id)
+          },
+        headlineContent = {
+          Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(text = bookmark.title)
+          }
+        },
+        trailingContent = {
+          Box {
+            TextButton(
+              onClick = {
+                expanded = !expanded
+              },
+            ) {
+              Text(stringResource(id = StringsR.string.common_action_more))
+            }
+            DropdownMenu(
+              expanded = expanded,
+              onDismissRequest = { expanded = false },
+            ) {
+              DropdownMenuItem(
+                text = { Text(stringResource(id = StringsR.string.common_action_edit)) },
+                onClick = {
+                  expanded = false
+                  onEdit(bookmark.id)
+                },
+              )
+              DropdownMenuItem(
+                text = { Text(stringResource(id = StringsR.string.common_action_remove)) },
+                onClick = {
+                  expanded = false
+                  onDelete(bookmark.id)
+                },
+              )
+            }
+          }
+        },
+        supportingContent = {
+          Text(text = bookmark.subtitle)
+        },
+      )
+    },
+  )
+}
+
+@Composable
+@Preview
+private fun BookmarkItemPreview() {
+  BookmarkItem(
+    bookmark = BookmarkItemViewState(
+      title = "Bookmark 1",
+      subtitle = "10:10:10 / 12:12:12",
+      id = Bookmark.Id(Uuid.random()),
+      showSleepIcon = true,
+    ),
+    onDelete = {},
+    onEdit = { },
+    onClick = {},
+  )
+}
