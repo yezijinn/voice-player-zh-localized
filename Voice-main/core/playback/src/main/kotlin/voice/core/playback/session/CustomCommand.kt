@@ -23,7 +23,7 @@ internal sealed interface CustomCommand {
   data class SetGain(val gain: Decibel) : CustomCommand
 
   @Serializable
-  data class SetSkipToNextEnabled(val enabled: Boolean) : CustomCommand
+  data class SetRemainingEpisodes(val count: Int) : CustomCommand
 
   companion object {
 

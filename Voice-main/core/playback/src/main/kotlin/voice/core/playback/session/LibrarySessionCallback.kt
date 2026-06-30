@@ -214,8 +214,8 @@ class LibrarySessionCallback(
       is CustomCommand.SetGain -> {
         player.setGain(command.gain)
       }
-      is CustomCommand.SetSkipToNextEnabled -> {
-        player.skipToNextEnabled = command.enabled
+      is CustomCommand.SetRemainingEpisodes -> {
+        player.remainingEpisodes = command.count
       }
     }
 

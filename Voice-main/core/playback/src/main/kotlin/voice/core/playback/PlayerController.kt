@@ -188,8 +188,8 @@ class PlayerController(
     controller.setPlaybackSpeed(speed)
   }
 
-  fun setSkipToNextEnabled(enabled: Boolean) = executeAfterPrepare { controller ->
-    controller.sendCustomCommand(CustomCommand.SetSkipToNextEnabled(enabled))
+  fun setRemainingEpisodes(count: Int) = executeAfterPrepare { controller ->
+    controller.sendCustomCommand(CustomCommand.SetRemainingEpisodes(count))
   }
 
   fun setGain(gain: Decibel) = executeAfterPrepare { controller ->

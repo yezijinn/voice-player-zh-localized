@@ -7,6 +7,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.datastore.core.DataStore
 import dev.zacsweers.metro.Assisted
 import dev.zacsweers.metro.AssistedFactory
@@ -87,7 +88,7 @@ class BookPlayViewModel(
 
   internal val showSleepTimerDialog = mutableStateOf(false)
 
-  private var episodeCountdown = 0
+  private var episodeCountdown by mutableStateOf(0)
   private var lastChapterIndex = -1
 
   init {
@@ -163,29 +164,21 @@ class BookPlayViewModel(
     val currentChapterFlatIndex = book.chapters.takeWhile { it != book.currentChapter }
       .sumOf { it.chapterMarks.count() } + book.currentChapter.chapterMarks.indexOf(book.currentMark)
 
-    // 定集关闭：当倒计时为1时，禁用片尾自动跳到下一集，避免跳过片尾时直接进入下一集
-    player.setSkipToNextEnabled(episodeCountdown != 1)
+    // 定集关闭：同步剩余集数到 VoicePlayer
+    LaunchedEffect(episodeCountdown) {
+      player.setRemainingEpisodes(episodeCountdown)
+    }
 
     // 最后一集检测：如果当前是最后一集且定时开启，播放完成后自动关闭定时
     val totalChapters = book.chapters.sumOf { it.chapterMarks.count() }
     val isLastChapter = currentChapterFlatIndex >= totalChapters - 1
-    if (isLastChapter && (sleepTimerActive || episodeCountdown > 0)) {
-      // 最后一集播放完成后自动关闭所有定时
-      if (!isPlaying) {
+    LaunchedEffect(isLastChapter, isPlaying) {
+      if (isLastChapter && !isPlaying && (sleepTimerActive || episodeCountdown > 0)) {
+        // 最后一集播放完成后自动关闭所有定时
         sleepTimer.disable()
         episodeCountdown = 0
         lastChapterIndex = -1
       }
-    }
-
-    LaunchedEffect(currentChapterFlatIndex) {
-      if (episodeCountdown > 0 && lastChapterIndex >= 0 && currentChapterFlatIndex > lastChapterIndex) {
-        episodeCountdown--
-        if (episodeCountdown <= 0) {
-          player.playPause()
-        }
-      }
-      lastChapterIndex = currentChapterFlatIndex
     }
 
     return BookPlayViewState(
