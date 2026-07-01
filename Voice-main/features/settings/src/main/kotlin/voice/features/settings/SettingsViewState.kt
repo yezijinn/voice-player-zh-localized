@@ -56,6 +56,7 @@ data class SettingsViewState(
     val startTime: LocalTime,
     val endTime: LocalTime,
     val durationMinutes: Int,
+    val endOfTimerKillApp: Boolean = false,
   ) {
     companion object {
       fun preview(): AutoSleepTimerViewState {
@@ -64,6 +65,7 @@ data class SettingsViewState(
           startTime = LocalTime.of(22, 0),
           endTime = LocalTime.of(6, 0),
           durationMinutes = 20,
+          endOfTimerKillApp = false,
         )
       }
     }

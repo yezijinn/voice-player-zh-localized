@@ -98,6 +98,7 @@ class SettingsViewModel(
         startTime = autoSleepTimer.autoSleepStartTime,
         endTime = autoSleepTimer.autoSleepEndTime,
         durationMinutes = autoSleepTimer.duration.inWholeMinutes.toInt(),
+        endOfTimerKillApp = autoSleepTimer.endOfTimerKillApp,
       ),
       analyticsEnabled = analyticsEnabled,
       showAnalyticSetting = appInfoProvider.analyticsIncluded,
@@ -251,5 +252,13 @@ class SettingsViewModel(
 
   override fun openDeveloperMenu() {
     navigator.goTo(Destination.DeveloperSettings)
+  }
+
+  override fun setEndOfTimerKillApp(enabled: Boolean) {
+    mainScope.launch {
+      sleepTimerPreferenceStore.updateData { currentPrefs ->
+        currentPrefs.copy(endOfTimerKillApp = enabled)
+      }
+    }
   }
 }

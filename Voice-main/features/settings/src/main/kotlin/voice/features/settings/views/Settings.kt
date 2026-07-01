@@ -33,6 +33,7 @@ import voice.features.settings.SettingsViewEffect
 import voice.features.settings.SettingsViewModel
 import voice.features.settings.SettingsViewState
 import voice.features.settings.views.sleeptimer.AutoSleepTimerCard
+import voice.features.settings.views.sleeptimer.EndOfTimerKillAppRow
 import voice.navigation.Destination
 import voice.navigation.NavEntryProvider
 import voice.core.strings.R as StringsR
@@ -131,6 +132,14 @@ private fun Settings(
 
       item {
         AutoSleepTimerCard(viewState.autoSleepTimer, listener)
+      }
+
+      // 定时结束时关闭播放器（独立功能）
+      item {
+        EndOfTimerKillAppRow(
+          enabled = viewState.autoSleepTimer.endOfTimerKillApp,
+          onEnabledChange = listener::setEndOfTimerKillApp,
+        )
       }
 
       item {

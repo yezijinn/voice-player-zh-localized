@@ -20,6 +20,10 @@ public data class SleepTimerPreference(
   val autoSleepStartTime: LocalTime,
   @Serializable(with = LocalTimeSerializer::class)
   val autoSleepEndTime: LocalTime,
+  /**
+   * 定时结束时是否关闭播放器（结束APP进程）
+   */
+  val endOfTimerKillApp: Boolean = false,
 ) {
 
   public companion object {
@@ -28,6 +32,7 @@ public data class SleepTimerPreference(
       autoSleepStartTime = LocalTime.of(22, 0),
       autoSleepEndTime = LocalTime.of(6, 0),
       duration = 20.minutes,
+      endOfTimerKillApp = false,
     )
   }
 

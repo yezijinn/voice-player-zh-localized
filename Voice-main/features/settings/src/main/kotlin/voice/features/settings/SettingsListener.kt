@@ -35,6 +35,8 @@ interface SettingsListener {
 
   fun openDeveloperMenu()
 
+  fun setEndOfTimerKillApp(enabled: Boolean)
+
   companion object {
     fun noop() = object : SettingsListener {
       override fun close() {}
@@ -62,6 +64,7 @@ interface SettingsListener {
       override fun onSkipEndSecondsRowClick() {}
       override fun toggleSkipSilence() {}
       override fun openDeveloperMenu() {}
+      override fun setEndOfTimerKillApp(enabled: Boolean) {}
     }
   }
 }

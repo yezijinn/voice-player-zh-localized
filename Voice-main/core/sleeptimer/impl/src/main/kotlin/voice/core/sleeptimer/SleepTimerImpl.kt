@@ -76,6 +76,7 @@ class SleepTimerImpl internal constructor(
     playerController.setVolume(1F)
 
     val fadeOutDuration = fadeOutStore.data.first()
+    val calibrationInterval = 10.seconds  // 每10秒检查一次用户设置
     var interval = 500.milliseconds
 
     while (left > Duration.ZERO) {
@@ -84,6 +85,13 @@ class SleepTimerImpl internal constructor(
         interval = 200.milliseconds
         updateVolume(left, fadeOutDuration)
       }
+
+      // 每隔 calibrationInterval 秒检查用户是否手动关闭了功能
+      if (left <= calibrationInterval || (duration.inWholeMilliseconds - left.inWholeMilliseconds) % calibrationInterval.inWholeMilliseconds < interval.inWholeMilliseconds) {
+        val currentPref = sleepTimerPreferenceStore.data.first()
+        Logger.d("Periodic check: endOfTimerKillApp = ${currentPref.endOfTimerKillApp}")
+      }
+
       delay(interval)
       left = max((left - interval).inWholeMilliseconds, 0).milliseconds
       state.value = SleepTimerState.Enabled.WithDuration(left)
@@ -91,7 +99,16 @@ class SleepTimerImpl internal constructor(
     playerController.setVolume(1f)
     state.value = SleepTimerState.Disabled
 
+    // 先暂停播放
     playerController.pauseWithRewind(fadeOutDuration)
+
+    // 定时结束，实时检查开关状态（如果用户手动关闭了功能，不再触发）
+    val finalPref = sleepTimerPreferenceStore.data.first()
+    if (finalPref.endOfTimerKillApp) {
+      // 延迟3秒后关闭APP
+      delay(3.seconds)
+      killAppProcess()
+    }
 
     val shakeDetected = detectShakeWithTimeout()
     playerController.setVolume(1F)
@@ -129,5 +146,15 @@ class SleepTimerImpl internal constructor(
 
   internal companion object {
     val SHAKE_TO_RESET_TIME = 30.seconds
+  }
+
+  private fun killAppProcess() {
+    try {
+      Logger.i("Killing app process as end of timer action")
+      android.os.Process.killProcess(android.os.Process.myPid())
+      System.exit(0)
+    } catch (e: Exception) {
+      Logger.e("Failed to kill app process: ${e.message}")
+    }
   }
 }

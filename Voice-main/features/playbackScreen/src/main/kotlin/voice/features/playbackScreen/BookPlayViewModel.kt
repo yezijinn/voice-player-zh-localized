@@ -257,7 +257,7 @@ class BookPlayViewModel(
       val currentChapterDuration = book.chapters[currentChapterIndex].duration
       val remainingInCurrentChapter = (currentChapterDuration - currentPositionInChapter).coerceAtLeast(0L)
 
-      // 计算后续 chapters 的总时长
+      // 计算后续 chapters 的总时长（毫秒级精度）
       var totalDurationMs = remainingInCurrentChapter
       for (i in 1 until count) {
         val chapterIndex = currentChapterIndex + i
@@ -266,9 +266,9 @@ class BookPlayViewModel(
         }
       }
 
-      // 转为分钟并启用定时
-      val totalMinutes = (totalDurationMs / 1000 / 60).toInt().coerceAtLeast(1)
-      sleepTimer.enable(SleepTimerMode.TimedWithDuration(totalMinutes.minutes))
+      // 使用毫秒级精度，不转换为分钟（避免精度丢失）
+      val totalDuration = totalDurationMs.milliseconds.coerceAtLeast(1.milliseconds)
+      sleepTimer.enable(SleepTimerMode.TimedWithDuration(totalDuration))
       episodeCountdown = count
       showSleepTimerDialog.value = false
     }
