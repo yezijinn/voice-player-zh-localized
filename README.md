@@ -63,49 +63,118 @@
 
 ### 方式二：自行编译
 
+如果你想自己修改代码或定制功能，可以按照以下步骤编译。
+
+#### 1. 下载编译环境
+
+项目需要以下依赖，**请按顺序下载并解压到项目根目录的 `tools/` 文件夹**：
+
+| 依赖 | 版本 | 下载链接 | 解压后目录 |
+|------|------|----------|------------|
+| JDK | 25.0.3 | [OpenJDK 25 (解压密码: openweb)`](https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.3%2B9/OpenJDK25U-jdk_x64_windows_hotspot_25.0.3_9.zip) | `tools/jdk/` |
+| Gradle | 9.6.1 | [Gradle 9.6.1](https://services.gradle.org/distributions/gradle-9.6.1-all.zip) | `tools/gradle/` |
+| Android SDK | API 37 | [Android SDK 命令行工具](https://dl.google.com/android/repository/commandlinetools-win-11076708_latest.zip) + [platforms/android-37](https://dl.google.com/android/repository/platform-37_r02.zip) + [build-tools/37.0.0](https://dl.google.com/android/repository/build-tools_r37.zip) | `tools/android-sdk/` |
+
+**详细安装步骤：**
+
 ```bash
-# 克隆项目
-git clone https://github.com/yezijinn/voice-player-zh-localized.git
+# 1. 进入项目目录
 cd voice-player-zh-localized
 
-# 运行一键打包脚本
+# 2. 创建 tools 目录（如果不存在）
+mkdir tools
+
+# 3. 下载并解压 JDK 25
+# 下载链接: https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.3%2B9/OpenJDK25U-jdk_x64_windows_hotspot_25.0.3_9.zip
+# 解压后将文件夹重命名为 jdk，放入 tools 目录
+# 最终路径: tools/jdk/bin/java.exe
+
+# 4. 下载并解压 Gradle 9.6.1
+# 下载链接: https://services.gradle.org/distributions/gradle-9.6.1-all.zip
+# 解压后将文件夹重命名为 gradle，放入 tools 目录
+# 最终路径: tools/gradle/bin/gradle.bat
+
+# 5. 下载并配置 Android SDK
+# 5.1 下载命令行工具: https://dl.google.com/android/repository/commandlinetools-win-11076708_latest.zip
+# 5.2 解压到 tools/android-sdk/cmdline-tools/
+# 5.3 重命名文件夹为 latest
+# 5.4 使用 sdkmanager 安装平台:
+#     tools\android-sdk\cmdline-tools\latest\bin\sdkmanager.bat "platforms;android-37" "build-tools;37.0.0"
+
+# 6. 创建 local.properties（让项目能找到 Android SDK）
+# 在项目根目录创建文件 local.properties，内容如下：
+# sdk.dir=D:\path\to\voice-player-zh-localized\tools\android-sdk
+```
+
+> ⚠️ **重要**：请确保解压后的目录结构正确：
+> - `tools/jdk/bin/java.exe` ← JDK 可执行文件
+> - `tools/gradle/bin/gradle.bat` ← Gradle 可执行文件
+> - `tools/android-sdk/platforms/android-37/android.jar` ← Android 平台库
+
+#### 2. 运行编译
+
+环境配置完成后，执行一键打包：
+
+```bash
 python 一键打包.py
 ```
 
-编译完成后，APK 文件将生成在项目根目录。
+首次运行会下载必要的 Gradle 组件（大约 100-200MB），请耐心等待。
 
-### 编译环境要求
-
-| 依赖 | 版本 | 说明 |
-|------|------|------|
-| JDK | 25 | Android 开发必需 |
-| Gradle | 9.6.1 | 构建工具 |
-| Android SDK | API 37 | 编译 Android 37 |
-
-> 💡 **提示**：所有依赖已配置为本地化，无需联网下载，一键打包脚本可自动处理。
+编译成功后，APK 文件会生成在项目根目录。
 
 ---
 
 ## 🔧 首次编译 - 生成签名密钥
 
-首次编译需要生成签名密钥（用于给 APK 签名）：
+Android 应用安装到手机时需要数字签名，否则无法安装。首次编译需要生成一个签名密钥（相当于你的数字身份证）。
+
+#### 1. 生成签名密钥
+
+打开命令提示符（CMD）或 PowerShell，进入项目目录后执行：
 
 ```bash
-# 进入项目目录
-cd D:\TRAE_Project\Voice
-
-# 生成签名密钥（将密码替换为您自己的密码）
-tools\jdk\bin\keytool.exe -genkeypair -v -keystore Voice-main\signing\my-release-key.jks -alias jinn -keyalg RSA -keysize 2048 -validity 9125 -storepass 您的密码 -keypass 您的密码 -dname "CN=您的名字, OU=Development, O=Jinn, L=Beijing, ST=Beijing, C=CN"
-
-# 创建签名配置文件
-echo STORE_PASSWORD=您的密码 > Voice-main\signing\signing.properties
-echo KEY_ALIAS=jinn >> Voice-main\signing\signing.properties
-echo KEY_PASSWORD=您的密码 >> Voice-main\signing\signing.properties
+# 生成签名密钥
+# 请把下面的 "你的密码" 替换成你自己设置的密码（至少6位）
+# alias（别名）可以改成你喜欢的名字，比如 yourname 或 myapp
+keytool.exe -genkeypair -v -keystore signing.jks -alias 你的别名 -keyalg RSA -keysize 2048 -validity 10000 -storepass 你的密码 -keypass 你的密码 -dname "CN=你的名字, OU=Development, O=YourName, L=City, ST=State, C=CN"
 ```
 
+**参数说明：**
+- `signing.jks` - 生成的密钥文件名，可以改成你喜欢的名字
+- `你的别名` - 密钥的别名（建议用字母或数字，不要用中文）
+- `你的密码` - 你自己设置的密码（两次密码保持一致）
+- `你的名字` - 填你的名字或昵称
+
+执行后会在当前目录生成一个 `signing.jks` 文件，这就是你的签名密钥。
+
+#### 2. 配置签名信息
+
+在项目根目录创建签名配置文件（或者直接修改 `Voice-main/signing/signing.properties`）：
+
+```bash
+# Windows 系统
+echo STORE_PASSWORD=你的密码 > signing.properties
+echo KEY_ALIAS=你的别名 >> signing.properties
+echo KEY_PASSWORD=你的密码 >> signing.properties
+```
+
+#### 3. 重新编译
+
+配置完成后，重新运行编译命令：
+
+```bash
+python 一键打包.py
+```
+
+编译成功的 APK 已经使用你的签名，可以直接安装到手机。
+
+---
+
 ⚠️ **重要提示**：
-- 签名密钥文件已添加到 `.gitignore`，不会推送到 GitHub
-- 请务必备份您的签名密钥和密码，丢失后将无法更新应用
+- **请务必备份你的签名密钥文件**（`signing.jks`）和密码！丢失后将无法生成相同签名的更新包
+- 密钥文件已添加到 `.gitignore`，**不会**推送到 GitHub
+- 如果你使用其他名字作为别名或密钥文件，编译命令中的配置也要相应修改
 
 ---
 
