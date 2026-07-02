@@ -1,45 +1,32 @@
-# Jinn有声书播放器 🎧
+# Jinn有声书播放器
 
 [![License](https://img.shields.io/badge/License-GPL--3.0-blue.svg)](LICENSE.md)
 [![Platform](https://img.shields.io/badge/Platform-Android-green.svg)](https://developer.android.com)
-[![Version](https://img.shields.io/badge/Version-2026.06.30-blue.svg)]()
 [![Language](https://img.shields.io/badge/Language-Kotlin-purple.svg)]()
-[![Stars](https://img.shields.io/github/stars/yezijinn/voice-player-zh-localized.svg)]()
+[![Latest Release](https://img.shields.io/github/v/release/yezijinn/voice-player-zh-localized)](https://github.com/yezijinn/voice-player-zh-localized/releases)
 [![Last Commit](https://img.shields.io/github/last-commit/yezijinn/voice-player-zh-localized.svg)]()
 
-> 一款专为中文用户打造的开源有声书播放器，支持定时停止、定集停止、跳过片头片尾等实用功能。
+一款面向中文听书场景的 Android 有声书播放器。它保留了原始 Voice 项目的稳定基础，同时补齐了更适合中文用户的界面与常用播放能力，包括定时停止、定集停止、跳过片头片尾、书签和桌面小部件。
 
----
+## 最新发布
 
-## 📱 关于
+- 当前最新安装包：**Jinn有声书播放器 v20260702**
+- 下载地址：<https://github.com/yezijinn/voice-player-zh-localized/releases/tag/v20260702>
+- 旧版安装包已清理：`v1.0.0` 旧资产不再保留
 
-**Jinn有声书播放器** 是一款功能强大的 Android 有声书应用，基于 [Voice](https://github.com/PaulWoitaschek/Voice) 开源项目二次开发，专为中文用户优化。
-
-你是否遇到过这些问题？
-- 📚 有声书太长，想定时停止却找不到合适的功能？
-- 😴 睡前听书，想设置播放N集后自动停止？
-- ⏭️ 每次都要手动跳过冗长的片头片尾？
-- 🌐 想用中文界面，却找不到好用的播放器？
-
-**Jinn有声书播放器** 就是为你而设计的！
-
----
-
-## ✨ 核心功能
+## 主要能力
 
 | 功能 | 说明 |
 |------|------|
-| 🇨🇳 **中文界面** | 100% 中文本地化，简洁易用 |
-| ⏰ **定时关闭** | 按时间定时停止播放（分钟/章节） |
-| 📚 **定集停止** | 设置播放N集后自动停止，听书更省心 |
-| ⏭️ **跳过片头片尾** | 自定义跳过时长，自动跳过冗余内容 |
-| 📖 **书签功能** | 随时保存播放位置，不错过任何精彩 |
-| 🎨 **主题定制** | 多种主题色可选，个性化你的播放器 |
-| 📱 **桌面小部件** | 支持桌面小组件，快速控制播放 |
+| 中文界面 | 全站中文本地化，适合直接上手 |
+| 定时关闭 | 支持按时间停止播放 |
+| 定集停止 | 播放到指定集数后自动停止 |
+| 跳过片头片尾 | 可自定义片头、片尾跳过时长 |
+| 书签 | 记录并快速回到播放位置 |
+| 主题 | 支持多种主题配色 |
+| 桌面小部件 | 快速控制播放状态 |
 
----
-
-## 📸 截图展示
+## 截图展示
 
 | 欢迎页面 | 应用主页 |
 |:---:|:---:|
@@ -53,7 +40,21 @@
 |:---:|:---:|
 | ![Timer](Voice-main/screenshots/timer.jpg) | ![About](Voice-main/screenshots/about.jpg) |
 
----
+## 安装与编译
+
+### 下载安装包
+
+直接到 Releases 页面下载最新安装包：<https://github.com/yezijinn/voice-player-zh-localized/releases>
+
+### 本地编译
+
+如果需要自行编译或二次修改，请把项目依赖放到 `tools/` 目录，然后运行：
+
+```bash
+python 一键打包.py
+```
+
+脚本会把完整编译日志写入根目录的 `build.log`，编译成功后自动生成可安装 APK。
 
 ## 📥 下载安装
 
