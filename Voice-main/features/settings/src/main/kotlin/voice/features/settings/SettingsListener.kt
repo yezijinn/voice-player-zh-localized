@@ -26,7 +26,6 @@ interface SettingsListener {
 
   fun toggleAnalytics()
   fun openFolderPicker()
-  fun onAppVersionClick()
   fun skipStartSecondsChanged(seconds: Int)
   fun onSkipStartSecondsRowClick()
   fun skipEndSecondsChanged(seconds: Int)
@@ -57,7 +56,6 @@ interface SettingsListener {
       override fun setAutoSleepTimerDuration(durationMinutes: Int) {}
       override fun toggleAnalytics() {}
       override fun openFolderPicker() {}
-      override fun onAppVersionClick() {}
       override fun skipStartSecondsChanged(seconds: Int) {}
       override fun onSkipStartSecondsRowClick() {}
       override fun skipEndSecondsChanged(seconds: Int) {}

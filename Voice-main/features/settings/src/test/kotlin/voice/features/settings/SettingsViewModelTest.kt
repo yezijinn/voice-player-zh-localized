@@ -27,7 +27,6 @@ import voice.navigation.Destination
 import voice.navigation.Navigator
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertIs
 import kotlin.time.Instant
 
 class SettingsViewModelTest {
@@ -141,28 +140,11 @@ class SettingsViewModelTest {
   }
 
   @Test
-  fun `developer menu is hidden until app version tapped 13 times`() = scope.runTest {
+  fun `view state hides developer menu when locked`() = scope.runTest {
     backgroundScope.launchMolecule(RecompositionMode.Immediate) {
       viewModel.viewState()
     }.test {
       assertEquals(expected = false, actual = awaitItem().showDeveloperMenu)
-
-      repeat(13) {
-        viewModel.onAppVersionClick()
-      }
-
-      assertEquals(expected = true, actual = awaitItem().showDeveloperMenu)
-    }
-  }
-
-  @Test
-  fun `developer menu unlock emits snackbar effect`() = scope.runTest {
-    viewModel.viewEffects.test {
-      repeat(13) {
-        viewModel.onAppVersionClick()
-      }
-
-      assertIs<SettingsViewEffect.DeveloperMenuUnlocked>(awaitItem())
     }
   }
 

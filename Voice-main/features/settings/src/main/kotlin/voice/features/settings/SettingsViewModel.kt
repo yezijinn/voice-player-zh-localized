@@ -2,6 +2,7 @@ package voice.features.settings
 
 import android.os.Build
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -9,9 +10,6 @@ import androidx.compose.runtime.remember
 import androidx.core.net.toUri
 import androidx.datastore.core.DataStore
 import dev.zacsweers.metro.Inject
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import voice.core.common.AppInfoProvider
 import voice.core.common.DispatcherProvider
@@ -62,10 +60,7 @@ class SettingsViewModel(
 ) : SettingsListener {
 
   private val mainScope = MainScope(dispatcherProvider)
-  internal val viewEffects: SharedFlow<SettingsViewEffect>
-    field = MutableSharedFlow<SettingsViewEffect>(extraBufferCapacity = 1)
   private val dialog = mutableStateOf<SettingsViewState.Dialog?>(null)
-  private var appVersionTapCount = 0
 
   @Composable
   fun viewState(): SettingsViewState {
@@ -235,18 +230,6 @@ class SettingsViewModel(
   override fun toggleAnalytics() {
     mainScope.launch {
       analyticsConsentStore.updateData { !it }
-    }
-  }
-
-  override fun onAppVersionClick() {
-    mainScope.launch {
-      if (developerMenuUnlockedStore.data.first()) {
-        return@launch
-      }
-      if (++appVersionTapCount >= 13) {
-        developerMenuUnlockedStore.updateData { true }
-        viewEffects.emit(SettingsViewEffect.DeveloperMenuUnlocked)
-      }
     }
   }
 

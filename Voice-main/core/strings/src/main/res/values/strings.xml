@@ -286,8 +286,6 @@
     <string name="sleep_timer.dialog.action.increment">Longer</string>
     <!-- Title of the sleep timer dialog. -->
     <string name="sleep_timer.dialog.title">Sleep timer</string>
-    <!-- Settings snackbar shown when developer menu is unlocked. -->
-    <string name="settings.developer_menu_unlocked">Developer menu unlocked</string>
     <!-- Settings row for the open source attribution. -->
     <string name="settings.attribution.title">Open Source Attribution</string>
     <!-- Settings row description for the open source attribution. -->

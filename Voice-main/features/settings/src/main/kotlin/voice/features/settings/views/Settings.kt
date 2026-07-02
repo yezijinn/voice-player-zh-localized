@@ -13,11 +13,10 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.retain.retain
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,7 +28,6 @@ import dev.zacsweers.metro.Provides
 import voice.core.common.rootGraphAs
 import voice.core.ui.VoiceTheme
 import voice.features.settings.SettingsListener
-import voice.features.settings.SettingsViewEffect
 import voice.features.settings.SettingsViewModel
 import voice.features.settings.SettingsViewState
 import voice.features.settings.views.sleeptimer.AutoSleepTimerCard
@@ -56,7 +54,6 @@ private fun Settings(
   snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
 ) {
   val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-  val context = androidx.compose.ui.platform.LocalContext.current
   Scaffold(
     modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
     snackbarHost = {
@@ -143,26 +140,12 @@ private fun Settings(
       }
 
       item {
-        AppVersion(
-          appVersion = viewState.appVersion,
-          onClick = listener::onAppVersionClick,
-        )
-      }
-      item {
         ListItem(
           headlineContent = {
             Text(stringResource(StringsR.string.settings_developer_info_title))
           },
           supportingContent = {
             Text(stringResource(StringsR.string.settings_developer_info_summary, viewState.buildTimestamp))
-          },
-          trailingContent = {
-            TextButton(onClick = {
-              val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse("https://github.com/yezijinn/voice-player-zh-localized"))
-              (context as android.app.Activity).startActivity(intent)
-            }) {
-              Text("打开")
-            }
           },
         )
       }
@@ -175,9 +158,10 @@ private fun Settings(
             Text(stringResource(StringsR.string.settings_attribution_summary))
           },
           trailingContent = {
+            val context = LocalContext.current
             TextButton(onClick = {
               val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse("https://github.com/PaulWoitaschek/Voice"))
-              (context as android.app.Activity).startActivity(intent)
+              context.startActivity(intent)
             }) {
               Text("打开")
             }
@@ -266,16 +250,6 @@ fun Settings() {
   val viewModel = retain<SettingsViewModel> { rootGraphAs<SettingsGraph>().settingsViewModel }
   val snackbarHostState = remember { SnackbarHostState() }
   val viewState = viewModel.viewState()
-  val currentDeveloperMenuUnlockedMessage = rememberUpdatedState(stringResource(StringsR.string.settings_developer_menu_unlocked))
-  LaunchedEffect(viewModel) {
-    viewModel.viewEffects.collect { viewEffect ->
-      when (viewEffect) {
-        SettingsViewEffect.DeveloperMenuUnlocked -> {
-          snackbarHostState.showSnackbar(currentDeveloperMenuUnlockedMessage.value)
-        }
-      }
-    }
-  }
   Settings(viewState, viewModel, snackbarHostState)
 }
 

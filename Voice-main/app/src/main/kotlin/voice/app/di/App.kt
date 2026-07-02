@@ -5,6 +5,7 @@ import dev.zacsweers.metro.HasMemberInjections
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.createGraphFactory
 import voice.core.common.rootGraph
+import voice.core.common.rootGraphAs
 import voice.core.initializer.AppInitializer
 
 @HasMemberInjections
@@ -17,9 +18,7 @@ open class App : Application() {
     super.onCreate()
 
     rootGraph = createGraph()
-      .also { graph ->
-        graph.inject(this)
-      }
+    rootGraphAs<AppGraph>().inject(this)
 
     appInitializers.forEach {
       it.onAppStart(this)
