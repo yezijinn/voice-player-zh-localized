@@ -103,7 +103,7 @@ git add README.md
 ### 2. 提交到本地仓库
 
 ```bash
-git commit -m "第一次提交"
+git commit -m "更新"
 ```
 
 提交信息建议写清楚一点，比如：
