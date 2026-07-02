@@ -147,6 +147,18 @@ private fun Settings(
           supportingContent = {
             Text(stringResource(StringsR.string.settings_developer_info_summary, viewState.buildTimestamp))
           },
+          trailingContent = {
+            val context = LocalContext.current
+            TextButton(onClick = {
+              val intent = android.content.Intent(
+                android.content.Intent.ACTION_VIEW,
+                android.net.Uri.parse("https://github.com/yezijinn/voice-player-zh-localized/releases"),
+              )
+              context.startActivity(intent)
+            }) {
+              Text(stringResource(StringsR.string.settings_check_update_button))
+            }
+          },
         )
       }
       item {

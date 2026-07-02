@@ -42,12 +42,15 @@ import kotlin.test.assertEquals
 import kotlin.test.assertIs
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.uuid.Uuid
 
 class BookPlayViewModelTest {
 
   private val scope = TestScope()
   private val sleepTimerDataStore = MemoryDataStore(SleepTimerPreference.Default.copy(duration = 5.minutes))
+  private val skipStartSecondsStore = MemoryDataStore(30)
+  private val skipEndSecondsStore = MemoryDataStore(20)
   private val book = book()
   private val sleepTimer = mockk<SleepTimer> {
     val stateFlow = MutableStateFlow<SleepTimerState>(SleepTimerState.Disabled)
@@ -108,6 +111,8 @@ class BookPlayViewModelTest {
     dispatcherProvider = DispatcherProvider(scope.coroutineContext, scope.coroutineContext, scope.coroutineContext),
     experimentalPlaybackPersistenceFeatureFlag = MemoryFeatureFlag(false),
     kioskModeFeatureFlag = MemoryFeatureFlag(false),
+    skipStartSecondsStore = skipStartSecondsStore,
+    skipEndSecondsStore = skipEndSecondsStore,
   )
 
   @Test
@@ -133,6 +138,34 @@ class BookPlayViewModelTest {
     viewModel.onAcceptSleepEpisodeCount(3)
     yield()
     assertEquals(expected = false, actual = viewModel.showSleepTimerDialog.value)
+    // 当前第2章(index=1), 位置2.5min, skipStart=30s, skipEnd=20s
+    // 当前章剩余有效: (5:00-20s) - 2:30 = 2:10 = 130s
+    // 只有2章, 无后续章
+    // 外层加1s缓冲: 130s + 1s = 131s = 2:11
+    verify(exactly = 1) {
+      sleepTimer.enable(TimedWithDuration(2.minutes + 11.seconds))
+    }
+  }
+
+  @Test
+  fun `episode countdown keeps skip disabled behavior unchanged`() = scope.runTest {
+    val noSkipViewModel = viewModel(
+      skipStartSeconds = 0,
+      skipEndSeconds = 0,
+    )
+
+    noSkipViewModel.toggleSleepTimer()
+    yield()
+
+    noSkipViewModel.onAcceptSleepEpisodeCount(3)
+    yield()
+    // 当前第2章(index=1), 位置2.5min, skipStart=0, skipEnd=0
+    // 当前章剩余: 5:00 - 2:30 = 2:30 = 150s
+    // 只有2章, 无后续章
+    // 外层加1s缓冲: 150s + 1s = 151s = 2:31
+    verify(exactly = 1) {
+      sleepTimer.enable(TimedWithDuration(2.minutes + 31.seconds))
+    }
   }
 
   @Test
@@ -196,6 +229,26 @@ class BookPlayViewModelTest {
       ),
       actual = dialogState.items,
     )
+  }
+
+  @Test
+  fun `viewState shows original mark duration and played time`() = scope.runTest {
+    val viewModel = viewModel(
+      skipStartSeconds = 0,
+      skipEndSeconds = 0,
+    )
+
+    backgroundScope.launchMolecule(RecompositionMode.Immediate) {
+      viewModel.viewState()
+    }.test {
+      awaitItem()
+      val state = awaitItem()!!
+      // 当前mark "Middle Section" 从2min开始, endMs=239999
+      // currentMarkDuration = 120000ms = 2min
+      // positionInCurrentMark = 2.5min - 2min = 30s
+      assertEquals(expected = 2.minutes, actual = state.duration)
+      assertEquals(expected = 30.seconds, actual = state.playedTime)
+    }
   }
 
   @Test
@@ -305,7 +358,11 @@ class BookPlayViewModelTest {
     kioskMode: Boolean = false,
     livePlaybackFlow: MutableStateFlow<LivePlaybackState?> = MutableStateFlow(null),
     playStateFlow: MutableStateFlow<PlayStateManager.PlayState> = MutableStateFlow(PlayStateManager.PlayState.Paused),
+    skipStartSeconds: Int = 30,
+    skipEndSeconds: Int = 20,
   ): BookPlayViewModel {
+    val testSkipStartStore = MemoryDataStore(skipStartSeconds)
+    val testSkipEndStore = MemoryDataStore(skipEndSeconds)
     return BookPlayViewModel(
       bookRepository = mockk {
         coEvery { get(book.id) } returns book
@@ -331,6 +388,8 @@ class BookPlayViewModelTest {
       dispatcherProvider = DispatcherProvider(scope.coroutineContext, scope.coroutineContext, scope.coroutineContext),
       experimentalPlaybackPersistenceFeatureFlag = MemoryFeatureFlag(experimentalPlaybackPersistence),
       kioskModeFeatureFlag = MemoryFeatureFlag(kioskMode),
+      skipStartSecondsStore = testSkipStartStore,
+      skipEndSecondsStore = testSkipEndStore,
     )
   }
 }
@@ -359,6 +418,8 @@ private fun book(
       skipSilence = false,
       id = BookId(Uuid.random().toString()),
       gain = 0F,
+      skipStartSeconds = 0,
+      skipEndSeconds = 0,
       genre = null,
       narrator = null,
       series = null,

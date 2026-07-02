@@ -94,6 +94,7 @@ class VoicePlayer(
 
     val skipEndMs = skipEnd * 1000L
     val remaining = duration - currentPosition
+
     if (remaining in 1..skipEndMs) {
       val nextIndex = currentIndex + 1
       if (nextIndex < player.mediaItemCount) {

@@ -25,12 +25,37 @@ public data class Chapter(
   val fileSize: Long,
   val markData: List<MarkData>,
 ) : Comparable<Chapter> {
-
   @Ignore
   val chapterMarks: List<ChapterMark> = parseMarkData()
 
   override fun compareTo(other: Chapter): Int {
     return id.compareTo(other.id)
+  }
+}
+
+public object ChapterDurationHelper {
+  public fun effectiveDuration(
+    chapter: Chapter,
+    skipStartSeconds: Int,
+    skipEndSeconds: Int,
+  ): Long {
+    val startSkipMs = skipStartSeconds.coerceAtLeast(0) * 1000L
+    val endSkipMs = skipEndSeconds.coerceAtLeast(0) * 1000L
+    return (chapter.duration - startSkipMs - endSkipMs).coerceAtLeast(0L)
+  }
+
+  public fun remainingEffectiveDuration(
+    chapter: Chapter,
+    positionInChapterMs: Long,
+    skipStartSeconds: Int,
+    skipEndSeconds: Int,
+  ): Long {
+    val startSkipMs = skipStartSeconds.coerceAtLeast(0) * 1000L
+    val endSkipMs = skipEndSeconds.coerceAtLeast(0) * 1000L
+    val effectiveStartMs = startSkipMs.coerceAtMost(chapter.duration)
+    val effectiveEndMs = (chapter.duration - endSkipMs).coerceAtLeast(effectiveStartMs)
+    val currentPosition = positionInChapterMs.coerceAtLeast(effectiveStartMs)
+    return (effectiveEndMs - currentPosition).coerceAtLeast(0L)
   }
 }
 

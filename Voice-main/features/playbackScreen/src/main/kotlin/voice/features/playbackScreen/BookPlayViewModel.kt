@@ -21,14 +21,18 @@ import voice.core.common.DispatcherProvider
 import voice.core.common.MainScope
 import voice.core.data.Book
 import voice.core.data.BookId
+import voice.core.data.ChapterDurationHelper
 import voice.core.data.KioskModeDemoData
+import voice.core.data.Chapter
 import voice.core.data.durationMs
 import voice.core.data.markForPosition
 import voice.core.data.repo.BookRepository
 import voice.core.data.repo.BookmarkRepo
 import voice.core.data.sleeptimer.SleepTimerPreference
 import voice.core.data.store.CurrentBookStore
+import voice.core.data.store.SkipEndSecondsStore
 import voice.core.data.store.SkipSilenceStore
+import voice.core.data.store.SkipStartSecondsStore
 import voice.core.data.store.SleepTimerPreferenceStore
 import voice.core.featureflag.ExperimentalPlaybackPersistenceQualifier
 import voice.core.featureflag.FeatureFlag
@@ -74,6 +78,10 @@ class BookPlayViewModel(
   private val experimentalPlaybackPersistenceFeatureFlag: FeatureFlag<Boolean>,
   @KioskModeFeatureFlagQualifier
   private val kioskModeFeatureFlag: FeatureFlag<Boolean>,
+  @SkipStartSecondsStore
+  private val skipStartSecondsStore: DataStore<Int>,
+  @SkipEndSecondsStore
+  private val skipEndSecondsStore: DataStore<Int>,
   @Assisted
   private val bookId: BookId,
 ) {
@@ -137,6 +145,7 @@ class BookPlayViewModel(
     } else {
       book.content.positionInChapter - currentMark.startMs
     }
+    val currentMarkDuration = currentMark.durationMs
 
     val sleepTime = remember { sleepTimer.state }.collectAsState().value
     val sleepTimerActive = sleepTime.enabled
@@ -148,8 +157,8 @@ class BookPlayViewModel(
     val hasMoreThanOneChapter = book.chapters.sumOf { it.chapterMarks.count() } > 1
 
     val chapterItems = buildList {
-      book.chapters.forEachIndexed { chapterIndex, chapter ->
-        chapter.chapterMarks.forEachIndexed { markIndex, chapterMark ->
+      book.chapters.forEach { chapter ->
+        chapter.chapterMarks.forEach { chapterMark ->
           val isCurrent = chapterMark == book.currentMark && chapter == book.currentChapter
           add(
             BookPlayViewState.ChapterItem(
@@ -184,8 +193,8 @@ class BookPlayViewModel(
       title = book.content.name,
       showPreviousNextButtons = hasMoreThanOneChapter,
       chapterName = currentMark.name.takeIf { hasMoreThanOneChapter },
-      duration = currentMark.durationMs.milliseconds,
-      playedTime = positionInCurrentMark.milliseconds,
+      duration = currentMarkDuration.milliseconds,
+      playedTime = positionInCurrentMark.coerceAtMost(currentMarkDuration).milliseconds,
       cover = book.content.coverUrl,
       skipSilence = skipSilence,
       chapters = chapterItems,
@@ -251,23 +260,20 @@ class BookPlayViewModel(
       // 获取实时播放位置（优先使用播放器实时位置，而非持久化位置）
       val liveState = player.livePlaybackState(bookId)
       val currentPositionInChapter = liveState?.positionMs ?: book.content.positionInChapter
-      
-      // 计算当前位置到目标集数的总时长
+
       val currentChapterIndex = book.content.currentChapterIndex
-      val currentChapterDuration = book.chapters[currentChapterIndex].duration
-      val remainingInCurrentChapter = (currentChapterDuration - currentPositionInChapter).coerceAtLeast(0L)
+      val skipStart = skipStartSecondsStore.data.first()
+      val skipEnd = skipEndSecondsStore.data.first()
+      val totalDurationMs = calculateEpisodeCountdownDurationMs(
+        chapters = book.chapters,
+        currentChapterIndex = currentChapterIndex,
+        currentPositionInChapterMs = currentPositionInChapter,
+        count = count,
+        skipStartSeconds = skipStart,
+        skipEndSeconds = skipEnd,
+      )
 
-      // 计算后续 chapters 的总时长（毫秒级精度）
-      var totalDurationMs = remainingInCurrentChapter
-      for (i in 1 until count) {
-        val chapterIndex = currentChapterIndex + i
-        if (chapterIndex < book.chapters.size) {
-          totalDurationMs += book.chapters[chapterIndex].duration
-        }
-      }
-
-      // 使用毫秒级精度，不转换为分钟（避免精度丢失）
-      val totalDuration = totalDurationMs.milliseconds.coerceAtLeast(1.milliseconds)
+      val totalDuration = (totalDurationMs.coerceAtLeast(0L) + 1000L).milliseconds
       sleepTimer.enable(SleepTimerMode.TimedWithDuration(totalDuration))
       episodeCountdown = count
       showSleepTimerDialog.value = false
@@ -420,6 +426,46 @@ class BookPlayViewModel(
 
   fun onBatteryOptimizationRequested() {
     navigator.goTo(Destination.BatteryOptimization)
+  }
+
+  private fun calculateEpisodeCountdownDurationMs(
+    chapters: List<Chapter>,
+    currentChapterIndex: Int,
+    currentPositionInChapterMs: Long,
+    count: Int,
+    skipStartSeconds: Int,
+    skipEndSeconds: Int,
+  ): Long {
+    if (count <= 0 || currentChapterIndex !in chapters.indices) return 0L
+
+    val currentChapter = chapters[currentChapterIndex]
+    val currentChapterRemainingMs = if (skipStartSeconds > 0 || skipEndSeconds > 0) {
+      ChapterDurationHelper.remainingEffectiveDuration(
+        chapter = currentChapter,
+        positionInChapterMs = currentPositionInChapterMs,
+        skipStartSeconds = skipStartSeconds,
+        skipEndSeconds = skipEndSeconds,
+      )
+    } else {
+      (currentChapter.duration - currentPositionInChapterMs).coerceAtLeast(0L)
+    }
+
+    var totalDurationMs = currentChapterRemainingMs
+    for (offset in 1 until count) {
+      val chapterIndex = currentChapterIndex + offset
+      if (chapterIndex >= chapters.size) break
+      val chapter = chapters[chapterIndex]
+      totalDurationMs += if (skipStartSeconds > 0 || skipEndSeconds > 0) {
+        ChapterDurationHelper.effectiveDuration(
+          chapter = chapter,
+          skipStartSeconds = skipStartSeconds,
+          skipEndSeconds = skipEndSeconds,
+        )
+      } else {
+        chapter.duration
+      }
+    }
+    return totalDurationMs
   }
 
   private suspend fun currentBook(): Book? {

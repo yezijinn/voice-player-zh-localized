@@ -285,13 +285,13 @@
     <!-- 开源声明设置项。 -->
     <string name="settings.attribution.title">开源声明</string>
     <!-- 开源声明设置项的说明。 -->
-    <string name="settings.attribution.summary">本应用基于 Voice 开源项目，采用 Apache 2.0 许可证。感谢 Paul Woitaschek 和所有贡献者。</string>
+    <string name="settings.attribution.summary">基于 Voice 项目，采用 Apache 2.0 许可证。感谢 Paul Woitaschek 及贡献者。</string>
     <!-- 播放界面主页按钮标签。 -->
     <string name="common.action.home">主页</string>
     <!-- 开发者信息设置项。 -->
     <string name="settings.developer_info.title">二次开发信息</string>
     <!-- 开发者信息说明，%1$s 为构建时间。 -->
-    <string name="settings.developer_info.summary">开发者：Jinn\n构建时间：%1$s</string>
+    <string name="settings.developer_info.summary">二次开发者：叶子Jinn\n构建的时间：%1$s</string>
     <!-- 检查更新按钮文本。 -->
     <string name="settings_check_update_button">检查更新</string>
     <!-- 打开项目按钮文本。 -->

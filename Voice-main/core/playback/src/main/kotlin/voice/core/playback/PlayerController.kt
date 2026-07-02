@@ -274,9 +274,9 @@ class PlayerController(
   }
 
   private fun MediaItem.duration(): Long? {
-    val mediaId = mediaId.toMediaIdOrNull()
-    return if (mediaId is MediaId.ChapterMark) {
-      mediaId.markDurationMs
+    val parsedMediaId = mediaId.toMediaIdOrNull()
+    return if (parsedMediaId is MediaId.ChapterMark) {
+      parsedMediaId.markDurationMs
     } else {
       null
     }

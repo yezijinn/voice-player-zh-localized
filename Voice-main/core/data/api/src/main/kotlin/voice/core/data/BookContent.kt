@@ -21,6 +21,10 @@ public data class BookContent(
   val chapters: List<ChapterId>,
   val currentChapter: ChapterId,
   val positionInChapter: Long,
+  @ColumnInfo(defaultValue = "0")
+  val skipStartSeconds: Int = 0,
+  @ColumnInfo(defaultValue = "0")
+  val skipEndSeconds: Int = 0,
   val cover: File?,
   @ColumnInfo(defaultValue = "0")
   val gain: Float,
