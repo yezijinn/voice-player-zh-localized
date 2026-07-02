@@ -34,7 +34,7 @@ function setSrc(selector: string, src: string) {
 
 async function ready(): Promise<void> {
   const params = new URLSearchParams(location.search)
-  const locale = params.get('locale') ?? 'en-US'
+  const locale = params.get('locale') ?? 'zh-CN'
   const index = parseInt(params.get('index') ?? '0', 10)
   const asset = document.body.dataset.asset
   document.documentElement.lang = locale.split('-')[0] ?? locale

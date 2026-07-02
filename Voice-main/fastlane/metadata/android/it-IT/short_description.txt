@@ -1,1 +1,0 @@
-Lettore pulito per i tuoi file, con timer e segnalibri.

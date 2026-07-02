@@ -85,11 +85,11 @@
     <!-- 询问用户添加文件还是文件夹的副标题。 -->
     <string name="folder.add.type.subtitle">您想添加单个文件还是文件夹？</string>
     <!-- 子文件夹为作者、子子文件夹为书籍的文件夹模式标题。 -->
-    <string name="folder.mode.author.title">作者-书籍模式：子文件夹为作者，子子文件夹为书籍。</string>
+    <string name="folder.mode.author.title">作者书籍模式</string>
     <!-- 顶层子文件夹为书籍的文件夹模式标题。 -->
-    <string name="folder.mode.root.title">顶级书籍模式：子文件夹为书籍</string>
+    <string name="folder.mode.root.title">顶层书籍模式</string>
     <!-- 一个文件夹等于一本书的文件夹模式标题。 -->
-    <string name="folder.mode.single.title">单书模式：一个文件夹等于一本书。</string>
+    <string name="folder.mode.single.title">单一书籍模式</string>
     <!-- 当选中的文件中未检测到书籍时的空状态提示。 -->
     <string name="folder.type.book_example.empty">未能检测到任何书籍。这里有音频文件吗？</string>
     <!-- 预览中显示检测到哪些书籍的标题。 -->
@@ -115,7 +115,7 @@
     <!-- 显示旧有声书文件夹入口已迁移的一次性对话框正文。 -->
     <string name="library.folders.moved.dialog.message">您现在可以在“设置”中管理有声书文件夹。</string>
     <!-- 用于搜索书籍的提示文本。 -->
-    <string name="library.search.hint">您在找什么？</string>
+    <string name="library.search.hint">查找</string>
     <!-- 授予存储权限绕过方案的按钮文案。 -->
     <string name="library.storage_permission_bug.action">授予权限</string>
     <!-- 解释为何需要存储权限绕过方案的文案。 -->
@@ -163,17 +163,17 @@
     <!-- 快退播放操作的标签。 -->
     <string name="playback.action.rewind">快退</string>
     <!-- 打开电池优化设置的操作标签。 -->
-    <string name="playback.battery_optimization.action">更新</string>
+    <string name="playback.battery_optimization.action">去设置</string>
     <!-- 解释电源限制可能导致播放中断的提示文案。 -->
-    <string name="playback.battery_optimization.rationale">由于您的电源限制，可能会出现播放中断。</string>
+    <string name="playback.battery_optimization.rationale">省电：无限制 避免后台播放中断</string>
     <!-- 当前正在播放章节的内容描述前缀。 -->
     <string name="playback.chapter.current.content_description">当前章节</string>
     <!-- 跳到下一章节或下一曲目的内容描述。 -->
-    <string name="playback.chapter.next">下一曲</string>
+    <string name="playback.chapter.next">下一集</string>
     <!-- 跳到上一章节或上一曲目的内容描述。 -->
-    <string name="playback.chapter.previous">上一曲</string>
+    <string name="playback.chapter.previous">上一集</string>
     <!-- 播放期间切换跳过静音的菜单文案。 -->
-    <string name="playback.option.skip_silence">跳过静音</string>
+    <string name="playback.option.skip_silence">跳过无声的音频部分</string>
     <!-- 播放期间切换跳过片头的菜单文案。 -->
     <string name="playback.option.skip_start">跳过片头</string>
     <!-- 播放期间切换跳过片尾的菜单文案。 -->
@@ -227,11 +227,11 @@
     <!-- 选择自动睡眠定时器开始时间的标签。 -->
     <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">设置开始时间</string>
     <!-- 自动睡眠定时器时间窗口的设置说明。 -->
-    <string name="settings.auto_sleep_timer.summary">当播放在 %1$s 到 %2$s 之间开始时，自动启动睡眠定时器</string>
+    <string name="settings.auto_sleep_timer.summary">在 %1$s 到 %2$s 期间，使用定时器</string>
     <!-- 自动启动睡眠定时器的设置标题。 -->
     <string name="settings.auto_sleep_timer.title">自动睡眠定时器</string>
     <!-- 有声书文件夹设置项的说明。 -->
-    <string name="settings.library.folders.summary">管理用于扫描有声书的文件夹</string>
+    <string name="settings.library.folders.summary">添加、删除有声书的文件夹</string>
     <!-- 切换书库网格布局的设置项。 -->
     <string name="settings.library.use_grid.title">使用网格布局</string>
     <!-- 播放恢复时自动快退的设置标题。 -->
@@ -285,7 +285,7 @@
     <!-- 开源声明设置项。 -->
     <string name="settings.attribution.title">开源声明</string>
     <!-- 开源声明设置项的说明。 -->
-    <string name="settings.attribution.summary">本应用基于 Voice 开源项目（https://github.com/PaulWoitaschek/Voice），采用 Apache 2.0 许可证。感谢 Paul Woitaschek 和所有贡献者。</string>
+    <string name="settings.attribution.summary">本应用基于 Voice 开源项目，采用 Apache 2.0 许可证。感谢 Paul Woitaschek 和所有贡献者。</string>
     <!-- 播放界面主页按钮标签。 -->
     <string name="common.action.home">主页</string>
     <!-- 开发者信息设置项。 -->

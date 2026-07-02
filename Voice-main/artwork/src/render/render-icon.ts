@@ -24,7 +24,7 @@ interface IconOutput {
 // floating in a sea of blue. The Play Store renders icon.png as-is (no mask),
 // so this is also how the user sees it on the storefront.
 const OUTPUTS: IconOutput[] = [
-  { path: join(FASTLANE_DIR, 'en-US/images/icon.png'), size: 512, zoom: 1.3 },
+  { path: join(FASTLANE_DIR, 'zh-CN/images/icon.png'), size: 512, zoom: 1.3 },
 ]
 
 async function rasterize(svg: string, size: number, zoom: number): Promise<Buffer> {

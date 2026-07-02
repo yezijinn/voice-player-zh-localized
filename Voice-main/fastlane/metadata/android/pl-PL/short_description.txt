@@ -1,1 +1,0 @@
-Prosty odtwarzacz audiobooków dla własnych plików, z timerem snu i zakładkami.

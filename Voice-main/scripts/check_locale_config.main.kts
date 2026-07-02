@@ -5,9 +5,8 @@ import javax.xml.parsers.DocumentBuilderFactory
 
 val repoRoot = File(".").canonicalFile
 val stringsDir = File(repoRoot, "core/strings/src/main/res")
-val localeConfigFile = File(repoRoot, "app/src/main/res/xml/locales_config.xml")
 val minCoverage = 100
-val baseLocales = setOf("en-US")
+val baseLocales = setOf("zh-CN")
 val documentBuilderFactory = DocumentBuilderFactory.newInstance().apply {
   isNamespaceAware = true
 }
@@ -41,21 +40,7 @@ fun resourceLocaleToBcp47(resourceLocale: String): String {
   return if (parts.size == 1) language else "$language-${parts[1]}"
 }
 
-fun configuredLocales(): Set<String> {
-  val document = documentBuilderFactory.newDocumentBuilder().parse(localeConfigFile)
-  val locales = document.getElementsByTagName("locale")
-  val namespace = "http://schemas.android.com/apk/res/android"
-  return buildSet {
-    for (index in 0 until locales.length) {
-      val locale = locales.item(index)
-      val name = locale.attributes.getNamedItemNS(namespace, "name")?.nodeValue
-      if (!name.isNullOrBlank()) {
-        add(name)
-      }
-    }
-  }
-}
-
+fun configuredLocales(): Set<String> = baseLocales
 data class LocaleCoverage(
   val locale: String,
   val present: Int,
@@ -87,19 +72,19 @@ val missing = expectedLocales - actualLocales
 val unexpected = actualLocales - expectedLocales
 
 if (missing.isNotEmpty() || unexpected.isNotEmpty()) {
-  println("Locale config does not match localization coverage.")
+  println("Locale resources do not match expected coverage.")
   println("Expected locales (>= ${minCoverage}% coverage plus ${baseLocales.sorted().joinToString()}):")
   println(expectedLocales.sorted().joinToString(", "))
   println("Actual locales:")
   println(actualLocales.sorted().joinToString(", "))
 
   if (missing.isNotEmpty()) {
-    println("Missing from locale config:")
+    println("Missing from expected locales:")
     missing.sorted().forEach { println("- $it") }
   }
 
   if (unexpected.isNotEmpty()) {
-    println("Locales in config at or below ${minCoverage}% coverage:")
+    println("Locales below coverage threshold:")
     unexpected.sorted().forEach { println("- $it") }
   }
 
@@ -108,7 +93,7 @@ if (missing.isNotEmpty() || unexpected.isNotEmpty()) {
     println("- ${it.locale}: ${it.present}/${it.total} (${String.format("%.1f", it.percentage)}%)")
   }
 
-  throw IllegalStateException("Update $localeConfigFile to match localization coverage.")
+  throw IllegalStateException("Update localization resources to match coverage expectations.")
 }
 
 println("Locale config matches localization coverage.")

@@ -22,9 +22,9 @@ Not sure which one to choose? See the [download source comparison](download-sour
 also [sponsor on GitHub](https://github.com/sponsors/PaulWoitaschek).</small>
 
 <div class="voice-screenshots">
-  <img src="screenshots/1_en-US.png" alt="Voice library view" />
-  <img src="screenshots/2_en-US.png" alt="Voice player view" />
-  <img src="screenshots/3_en-US.png" alt="Voice sleep timer" />
+  <img src="screenshots/1_zh-CN.png" alt="Voice library view" />
+  <img src="screenshots/2_zh-CN.png" alt="Voice player view" />
+  <img src="screenshots/3_zh-CN.png" alt="Voice sleep timer" />
 </div>
 
 ## Why Voice?
