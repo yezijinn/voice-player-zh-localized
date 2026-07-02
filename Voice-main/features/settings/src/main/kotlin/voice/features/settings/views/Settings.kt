@@ -160,10 +160,10 @@ private fun Settings(
           trailingContent = {
             val context = LocalContext.current
             TextButton(onClick = {
-              val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse("https://github.com/PaulWoitaschek/Voice"))
+              val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse("https://github.com/yezijinn/voice-player-zh-localized"))
               context.startActivity(intent)
             }) {
-              Text("打开")
+              Text(stringResource(StringsR.string.settings_attribution_open_button))
             }
           },
         )

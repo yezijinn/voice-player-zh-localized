@@ -1,299 +1,299 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation" tools:locale="en">
-    <!-- Bottom-sheet action for moving a book to the completed category. -->
-    <string name="book.category.action.mark_completed">Mark as Completed</string>
-    <!-- Bottom-sheet action for moving a book to the current category. -->
-    <string name="book.category.action.mark_current">Mark as Current</string>
-    <!-- Bottom-sheet action for moving a book to the not-started category. -->
-    <string name="book.category.action.mark_not_started">Mark as Not Started Yet</string>
-    <!-- Bottom-sheet action title for deleting a book. -->
-    <string name="book.delete.bottom_sheet.title">Delete Book</string>
-    <!-- Checkbox label confirming that book files should be deleted. -->
-    <string name="book.delete.dialog.confirm_files">Delete my files</string>
-    <!-- Warning message in the delete-book confirmation dialog. -->
-    <string name="book.delete.dialog.message">This will delete the files on your device.</string>
-    <!-- Title for the delete-book confirmation dialog. -->
-    <string name="book.delete.dialog.title">Delete Book</string>
-    <!-- Bottom-sheet item for choosing a cover from local files. -->
-    <string name="book.edit.cover.file">Cover from the file system</string>
-    <!-- Bottom-sheet item for choosing a cover from an internet search. -->
-    <string name="book.edit.cover.internet">Cover from the Internet</string>
-    <!-- Label for the editable book-name field and bottom-sheet item. -->
-    <string name="book.edit.name.label">Name</string>
-    <!-- Title for the dialog that edits a book title. -->
-    <string name="book.edit.title">Edit book</string>
-    <!-- Snackbar message shown after creating a bookmark. -->
-    <string name="bookmark.added.snackbar">Bookmark added</string>
-    <!-- Relative timestamp for a bookmark created moments ago. -->
-    <string name="bookmark.created.just_now">Just now</string>
-    <!-- Label for a bookmark-name text field. -->
-    <string name="bookmark.edit.name.label">Bookmark name</string>
-    <!-- Title for the dialog that edits a bookmark. -->
-    <string name="bookmark.edit.title">Edit bookmark</string>
-    <!-- Title for bookmark screens and bookmark actions. -->
-    <string name="bookmark.title">Bookmark</string>
-    <!-- Generic add action and content description. -->
-    <string name="common.action.add">Add</string>
-    <!-- Generic content description for closing the current screen or dialog. -->
-    <string name="common.action.close">Close</string>
-    <!-- Generic delete action and content description. -->
-    <string name="common.action.delete">Delete</string>
-    <!-- Generic edit action in popup menus. -->
-    <string name="common.action.edit">Edit</string>
-    <!-- Content description for an overflow menu button. -->
-    <string name="common.action.more">More</string>
-    <!-- Generic remove action in menus. -->
-    <string name="common.action.remove">Remove</string>
-    <!-- Generic action for dismissing a dialog without applying changes. -->
-    <string name="common.dialog.cancel">Cancel</string>
-    <!-- Generic confirmation action in dialogs that apply a value. -->
-    <string name="common.dialog.confirm">Set</string>
-    <!-- Generic action for acknowledging a dialog message. -->
-    <string name="common.dialog.ok">OK</string>
-    <!-- Generic error message shown when cover search or loading fails. -->
-    <string name="common.error.generic.message">Something went wrong 😢</string>
-    <!-- Retry action shown after a generic error. -->
-    <string name="common.error.generic.retry">Retry</string>
-    <!-- Content description for a cover preview that can be selected. -->
-    <string name="cover.content_description.selectable">Shows cover to choose</string>
-    <!-- Content description for an icon indicating the author in cover search results. -->
-    <string name="cover.search.author.content_description">Author</string>
-    <!-- Search query template for cover lookup when title and author are known. -->
-    <string name="cover.search.query.with_author">%1$s by %2$s audiobook cover</string>
-    <!-- Search query template for cover lookup when only the book title is known. -->
-    <string name="cover.search.query.without_author">%s audiobook cover</string>
-    <!-- Content description for an icon indicating a recent cover-search query. -->
-    <string name="cover.search.recent.content_description">Recent query</string>
-    <!-- Generic title for artwork shown for a book or cover editor. -->
-    <string name="cover.title">Cover</string>
-    <!-- Pluralized duration text for sleep timer minutes. -->
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation" tools:locale="zh">
+    <!-- 将书籍移至已完成分类的操作。 -->
+    <string name="book.category.action.mark_completed">标记为已完成</string>
+    <!-- 将书籍移至正在阅读分类的操作。 -->
+    <string name="book.category.action.mark_current">标记为正在阅读</string>
+    <!-- 将书籍移至未开始分类的操作。 -->
+    <string name="book.category.action.mark_not_started">标记为未开始</string>
+    <!-- 删除书籍的底部弹窗标题。 -->
+    <string name="book.delete.bottom_sheet.title">删除书籍</string>
+    <!-- 确认是否删除书籍文件的复选框文案。 -->
+    <string name="book.delete.dialog.confirm_files">删除我的文件</string>
+    <!-- 删除书籍确认弹窗中的警告文案。 -->
+    <string name="book.delete.dialog.message">这将删除您设备上的文件。</string>
+    <!-- 删除书籍确认弹窗标题。 -->
+    <string name="book.delete.dialog.title">删除书籍</string>
+    <!-- 从本地文件选择封面的底部弹窗选项。 -->
+    <string name="book.edit.cover.file">从文件系统选择封面</string>
+    <!-- 从网络搜索封面的底部弹窗选项。 -->
+    <string name="book.edit.cover.internet">从网络搜索封面</string>
+    <!-- 可编辑书名字段与底部弹窗选项的标签。 -->
+    <string name="book.edit.name.label">名称</string>
+    <!-- 编辑书籍标题的弹窗标题。 -->
+    <string name="book.edit.title">编辑书籍</string>
+    <!-- 创建书签后显示的提示条文案。 -->
+    <string name="bookmark.added.snackbar">书签已添加</string>
+    <!-- 刚创建书签时显示的相对时间。 -->
+    <string name="bookmark.created.just_now">刚刚</string>
+    <!-- 书签名称输入框的标签。 -->
+    <string name="bookmark.edit.name.label">书签名称</string>
+    <!-- 编辑书签的弹窗标题。 -->
+    <string name="bookmark.edit.title">编辑书签</string>
+    <!-- 书签页面和书签操作的标题。 -->
+    <string name="bookmark.title">书签</string>
+    <!-- 通用添加操作及内容描述。 -->
+    <string name="common.action.add">添加</string>
+    <!-- 关闭当前页面或弹窗的通用内容描述。 -->
+    <string name="common.action.close">关闭</string>
+    <!-- 通用删除操作及内容描述。 -->
+    <string name="common.action.delete">删除</string>
+    <!-- 弹出菜单中的通用编辑操作。 -->
+    <string name="common.action.edit">编辑</string>
+    <!-- 溢出菜单按钮的内容描述。 -->
+    <string name="common.action.more">更多</string>
+    <!-- 菜单中的通用移除操作。 -->
+    <string name="common.action.remove">移除</string>
+    <!-- 取消对话框中变更的通用操作。 -->
+    <string name="common.dialog.cancel">取消</string>
+    <!-- 应用某个值的通用确认操作。 -->
+    <string name="common.dialog.confirm">确定</string>
+    <!-- 认可对话框消息的通用操作。 -->
+    <string name="common.dialog.ok">确定</string>
+    <!-- 搜索封面或加载失败时显示的通用错误信息。 -->
+    <string name="common.error.generic.message">出了点问题 😢</string>
+    <!-- 通用错误后的重试操作。 -->
+    <string name="common.error.generic.retry">重试</string>
+    <!-- 可选择封面的内容描述。 -->
+    <string name="cover.content_description.selectable">显示可选择的封面</string>
+    <!-- 封面搜索结果中表示作者的图标内容描述。 -->
+    <string name="cover.search.author.content_description">作者</string>
+    <!-- 已知标题和作者时的封面搜索关键词模板。 -->
+    <string name="cover.search.query.with_author">%1$s 作者 %2$s 有声书封面</string>
+    <!-- 仅知道书名时的封面搜索关键词模板。 -->
+    <string name="cover.search.query.without_author">%s 有声书封面</string>
+    <!-- 最近封面搜索关键词的图标内容描述。 -->
+    <string name="cover.search.recent.content_description">最近搜索</string>
+    <!-- 用于书籍或封面编辑器的封面标题。 -->
+    <string name="cover.title">封面</string>
+    <!-- 睡眠定时器分钟数的复数形式文本。 -->
     <plurals name="duration.minutes">
-        <item quantity="one">%d minute</item>
-        <item quantity="other">%d minutes</item>
+        <item quantity="other">%d 分钟</item>
     </plurals>
-    <!-- Pluralized duration text for settings that use seconds. -->
+    <!-- 设置中使用秒数时的复数形式文本。 -->
     <plurals name="duration.seconds">
-        <item quantity="one">%d second</item>
-        <item quantity="other">%d seconds</item>
+        <item quantity="other">%d 秒</item>
     </plurals>
-    <!-- Title for the folder picker during normal app use. -->
-    <string name="folder.add.title.default">Add your Audiobook(s)</string>
-    <!-- Title for the folder picker when adding the first audiobook during onboarding. -->
-    <string name="folder.add.title.onboarding">Add Your First Audiobook</string>
-    <!-- Button label for adding a single audio file as a book. -->
-    <string name="folder.add.type.file">File</string>
-    <!-- Button label for adding a folder of audiobooks. -->
-    <string name="folder.add.type.folder">Folder</string>
-    <!-- Subtitle asking whether the user wants to add a file or folder. -->
-    <string name="folder.add.type.subtitle">Would you like to add a single file as a book or a folder?</string>
-    <!-- Title for folder mode where subfolders are authors and nested folders are books. -->
-    <string name="folder.mode.author.title">Author-Book Mode: Subfolders are authors, sub-subfolders are books.</string>
-    <!-- Title for folder mode where top-level subfolders are books. -->
-    <string name="folder.mode.root.title">Top-Level Book Mode: Subfolders are books</string>
-    <!-- Title for folder mode where the selected folder is one book. -->
-    <string name="folder.mode.single.title">Single Book Mode: One folder equals one book.</string>
-    <!-- Empty-state message when no books are detected from selected files. -->
-    <string name="folder.type.book_example.empty">Audiobook Player could not detect any books. Are there any audio files?</string>
-    <!-- Header above the preview of books detected from a folder structure. -->
-    <string name="folder.type.book_example.header">This would lead to the following books being detected</string>
-    <!-- Pluralized file count shown in folder structure previews. -->
+    <!-- 正常使用时的文件夹选择器标题。 -->
+    <string name="folder.add.title.default">添加有声书</string>
+    <!-- 引导首次添加有声书时的文件夹选择器标题。 -->
+    <string name="folder.add.title.onboarding">添加第一本有声书</string>
+    <!-- 将单个音频文件作为书籍添加的按钮文案。 -->
+    <string name="folder.add.type.file">文件</string>
+    <!-- 添加有声书文件夹的按钮文案。 -->
+    <string name="folder.add.type.folder">文件夹</string>
+    <!-- 询问用户添加文件还是文件夹的副标题。 -->
+    <string name="folder.add.type.subtitle">您想添加单个文件还是文件夹？</string>
+    <!-- 子文件夹为作者、子子文件夹为书籍的文件夹模式标题。 -->
+    <string name="folder.mode.author.title">作者-书籍模式：子文件夹为作者，子子文件夹为书籍。</string>
+    <!-- 顶层子文件夹为书籍的文件夹模式标题。 -->
+    <string name="folder.mode.root.title">顶级书籍模式：子文件夹为书籍</string>
+    <!-- 一个文件夹等于一本书的文件夹模式标题。 -->
+    <string name="folder.mode.single.title">单书模式：一个文件夹等于一本书。</string>
+    <!-- 当选中的文件中未检测到书籍时的空状态提示。 -->
+    <string name="folder.type.book_example.empty">未能检测到任何书籍。这里有音频文件吗？</string>
+    <!-- 预览中显示检测到哪些书籍的标题。 -->
+    <string name="folder.type.book_example.header">将会检测到以下书籍</string>
+    <!-- 文件夹结构预览中显示的文件数量。 -->
     <plurals name="folder.type.file_count">
-        <item quantity="one">%d audio file</item>
-        <item quantity="other">%d audio files</item>
+        <item quantity="other">%d 个音频文件</item>
     </plurals>
-    <!-- Title for choosing how audiobook files are structured. -->
-    <string name="folder.type.title">How are your files structured?</string>
-    <!-- Library category header for completed books. -->
-    <string name="library.category.completed.title">Completed</string>
-    <!-- Library category header for books currently being listened to. -->
-    <string name="library.category.current.title">Current</string>
-    <!-- Library category header for books not started yet. -->
-    <string name="library.category.not_started.title">Not started Yet</string>
-    <!-- Library empty-state prompt shown before the first audiobook is added. -->
-    <string name="library.empty.add_first_book">Let\'s add your audiobook folder so you can start listening!</string>
-    <!-- Title for screens and rows that manage audiobook folders. -->
-    <string name="library.folders.title">Audiobook folders</string>
-    <!-- Title for the one-time dialog shown from the old audiobook folders shortcut. -->
-    <string name="library.folders.moved.dialog.title">Audiobook folders moved</string>
-    <!-- Body for the one-time dialog shown from the old audiobook folders shortcut. -->
-    <string name="library.folders.moved.dialog.message">You can now manage audiobook folders in Preferences.</string>
-    <!-- Hint text for searching books in the library. -->
-    <string name="library.search.hint">What are you looking for?</string>
-    <!-- Button label for granting the storage permission workaround. -->
-    <string name="library.storage_permission_bug.action">Grant permission</string>
-    <!-- Message explaining why a storage permission workaround is needed. -->
-    <string name="library.storage_permission_bug.message">For certain devices, a system app is missing the necessary permission to access the external storage. This access is essential for Audiobook Player to read your audiobooks.</string>
-    <!-- Title for the card explaining a required storage permission workaround. -->
-    <string name="library.storage_permission_bug.title">Permission required</string>
-    <!-- Media browser title for recently played audiobooks. -->
-    <string name="media_session.library.recent">Recent</string>
-    <!-- Media browser root title for all audiobooks. -->
-    <string name="media_session.library.root">All audiobooks</string>
-    <!-- Button label for advancing to the next onboarding step. -->
-    <string name="onboarding.action.next">Next</string>
-    <!-- Button label for continuing with analytics disabled. -->
-    <string name="onboarding.analytics_consent.action.disable">Continue without analytics</string>
-    <!-- Button label for continuing with analytics enabled. -->
-    <string name="onboarding.analytics_consent.action.enable">Continue with analytics</string>
-    <!-- Link label for opening the privacy policy from analytics consent. -->
-    <string name="onboarding.analytics_consent.action.privacy_policy">Privacy Policy</string>
-    <!-- Description for analytics consent during onboarding. -->
-    <string name="onboarding.analytics_consent.description">Allow us to collect anonymous usage data to help improve the app. You can change this later in settings.</string>
-    <!-- Title for analytics consent during onboarding. -->
-    <string name="onboarding.analytics_consent.title">Help improve Audiobook Player</string>
-    <!-- Button label for leaving onboarding and starting playback. -->
-    <string name="onboarding.completion.action.start_listening">Start Listening</string>
-    <!-- Subtitle on the onboarding completion screen. -->
-    <string name="onboarding.completion.subtitle">Your first audiobook is ready to play. Enjoy your journey with Audiobook Player!</string>
-    <!-- Title on the onboarding completion screen. -->
-    <string name="onboarding.completion.title">You\'re All Set!</string>
-    <!-- Subtitle explaining file and folder choices in onboarding. -->
-    <string name="onboarding.explanation.subtitle">With Audiobook Player, you can add books as individual files or organize them in folders. You choose!</string>
-    <!-- Title on the onboarding explanation screen. -->
-    <string name="onboarding.explanation.title">Your Library, Your Way</string>
-    <!-- Subtitle on the onboarding welcome screen. -->
-    <string name="onboarding.welcome.subtitle">Your personal pocket audiobook player. Let\'s get you set up.</string>
-    <!-- Title on the onboarding welcome screen. -->
-    <string name="onboarding.welcome.title">Welcome to Audiobook Player!</string>
-    <!-- Label for the playback action that skips forward. -->
-    <string name="playback.action.fast_forward">Fast forward</string>
-    <!-- Content description for a playback button that pauses audio. -->
-    <string name="playback.action.pause">Pause</string>
-    <!-- Content description for a playback button that starts audio. -->
-    <string name="playback.action.play">Play</string>
-    <!-- Content description for a control that toggles playback between play and pause. -->
-    <string name="playback.action.play_pause">Play / Pause</string>
-    <!-- Label for the playback action that skips backward. -->
-    <string name="playback.action.rewind">Rewind</string>
-    <!-- Action label for opening battery optimization settings. -->
-    <string name="playback.battery_optimization.action">Update</string>
-    <!-- Snackbar or prompt text explaining playback issues caused by power restrictions. -->
-    <string name="playback.battery_optimization.rationale">Due to your Power restrictions, playback interruptions might happen.</string>
-    <!-- Content description prefix for the currently playing chapter. -->
-    <string name="playback.chapter.current.content_description">Current chapter</string>
-    <!-- Content description for moving to the next chapter or track. -->
-    <string name="playback.chapter.next">Next track</string>
-    <!-- Content description for moving to the previous chapter or track. -->
-    <string name="playback.chapter.previous">Previous track</string>
-    <!-- Menu label for toggling silence skipping during playback. -->
-    <string name="playback.option.skip_silence">Skip Silence</string>
-    <!-- Menu label for toggling skip intro during playback. -->
-    <string name="playback.option.skip_start">Skip intro</string>
-    <!-- Menu label for toggling skip outro during playback. -->
-    <string name="playback.option.skip_end">Skip outro</string>
-    <!-- Menu and dialog title for changing volume gain. -->
-    <string name="playback.option.volume_boost">Volume boost</string>
-    <!-- Title and content description for playback-speed controls. -->
-    <string name="playback.speed.title">Playback speed</string>
-    <!-- Negative button for cancelling feedback. -->
-    <string name="review.feedback.action.cancel" tools:ignore="UnusedResources">Cancel</string>
-    <!-- Positive button for sending feedback. -->
-    <string name="review.feedback.action.send" tools:ignore="UnusedResources">Send Feedback</string>
-    <!-- Message for the dialog asking unhappy users for feedback. -->
-    <string name="review.feedback.message" tools:ignore="UnusedResources">Could you tell us what went wrong? We appreciate your feedback and it helps us to improve your experience.</string>
-    <!-- Title for the dialog asking unhappy users for feedback. -->
-    <string name="review.feedback.title" tools:ignore="UnusedResources">We\'re sorry to hear that!</string>
-    <!-- Negative button for dismissing the rating request. -->
-    <string name="review.request.action.dismiss" tools:ignore="UnusedResources">No, Thanks</string>
-    <!-- Positive button for opening the rating flow. -->
-    <string name="review.request.action.rate" tools:ignore="UnusedResources">Rate Now</string>
-    <!-- Message for the dialog asking happy users to rate the app. -->
-    <string name="review.request.message" tools:ignore="UnusedResources">Your feedback matters to us! If you have a moment, rate us and share your experience. It helps us to make improvements and offer a better listening experience.</string>
-    <!-- Title for the dialog asking happy users to rate the app. -->
-    <string name="review.request.title" tools:ignore="UnusedResources">Enjoying Audiobook Player?</string>
-    <!-- Settings about row showing the app version. -->
-    <string name="settings.about.app_version.title">App version</string>
-    <!-- Title and content description for opening settings. -->
-    <string name="settings.action.open">Preferences</string>
-    <!-- Settings row description for analytics consent. -->
-    <string name="settings.analytics_consent.description">Allow anonymous usage data collection to help improve the app</string>
-    <!-- Settings row title for analytics consent. -->
-    <string name="settings.analytics_consent.title">Analytics</string>
-    <!-- Title for the dark theme setting. -->
-    <!-- Settings row title for selecting the app color scheme. -->
-    <string name="settings.appearance.color_scheme.title">Color scheme</string>
-    <!-- Label for selecting Android dynamic color as app color scheme. -->
-    <string name="settings.appearance.color_scheme.dynamic">Dynamic color</string>
-    <!-- Description for Android dynamic color. -->
-    <string name="settings.appearance.color_scheme.dynamic.summary">Uses colors from your wallpaper and system theme.</string>
-    <!-- Label for selecting Voice blue as app color scheme. -->
-    <string name="settings.appearance.color_scheme.voice_blue">Voice blue</string>
-    <!-- Label for forcing dark mode. -->
-    <string name="settings.appearance.theme.dark">Dark</string>
-    <!-- Label for following the system light or dark setting. -->
-    <string name="settings.appearance.theme.follow_system">Follow system</string>
-    <!-- Label for forcing light mode. -->
-    <string name="settings.appearance.theme.light">Light</string>
-    <!-- Settings row title for selecting light or dark mode behavior. -->
-    <string name="settings.appearance.theme.title">Theme</string>
-    <!-- Label for selecting the automatic sleep timer end time. -->
-    <string name="settings.auto_sleep_timer.end.label" weblate-flags="max-length:16">Set end time</string>
-    <!-- Label for selecting the automatic sleep timer start time. -->
-    <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Set start time</string>
-    <!-- Settings summary for the automatic sleep timer time window. -->
-    <string name="settings.auto_sleep_timer.summary">Start a sleep timer automatically when playback begins between %1$s and %2$s</string>
-    <!-- Settings title for automatically starting a sleep timer. -->
-    <string name="settings.auto_sleep_timer.title">Automatic Sleep Timer</string>
-    <!-- Summary text for the audiobook folders settings row. -->
-    <string name="settings.library.folders.summary">Manage folders scanned for audiobooks</string>
-    <!-- Settings row for toggling grid layout in the library. -->
-    <string name="settings.library.use_grid.title">Use grid layout</string>
-    <!-- Title for the setting that rewinds automatically when playback resumes. -->
-    <string name="settings.playback.auto_rewind.title">Auto rewind</string>
-    <!-- Title for the setting that controls skip-forward and rewind duration. -->
-    <string name="settings.playback.seek_time.title">Skip amount</string>
-    <!-- Title for the setting that controls skip intro duration. -->
-    <string name="settings.playback.skip_start.title">Skip intro duration</string>
-    <!-- Title for the setting that controls skip outro duration. -->
-    <string name="settings.playback.skip_end.title">Skip outro duration</string>
-    <!-- Settings support row for opening the FAQ. -->
-    <string name="settings.support.faq.title">FAQ</string>
-    <!-- Settings support row for getting help. -->
-    <string name="settings.support.get_support.title">Get help</string>
-    <!-- Settings support row for helping translate the app. -->
-    <string name="settings.support.help_translating.title">Help translating Audiobook Player</string>
-    <!-- Settings support row for reporting a problem. -->
-    <string name="settings.support.report_issue.title">Report a problem</string>
-    <!-- Settings row description for opening the donation/support screen. -->
-    <string name="settings.support.support_voice.summary">Donations help keep Audiobook Player maintained</string>
-    <!-- Settings row for opening the donation/support screen. -->
-    <string name="settings.support.support_voice.title">Support development</string>
-    <!-- Settings support row for suggesting a product idea. -->
-    <string name="settings.support.suggest_idea.title">Suggest an idea</string>
-    <!-- Support screen action for donating through Ko-fi. -->
-    <string name="support.action.donate_kofi">Donate on Ko-fi</string>
-    <!-- Support screen text explaining why support is useful. -->
-    <string name="support.description.maintenance">Audiobook Player is free, open source, and maintained by one developer.</string>
-    <!-- Support screen text under the main description. -->
-    <string name="support.description.maintenance_subtitle">Donations help fund ongoing maintenance and development.</string>
-    <!-- Support screen heading above the list of what donations enable. -->
-    <string name="support.helps.title">Support helps with</string>
-    <!-- Support screen list item: bug fixes and ongoing maintenance. -->
-    <string name="support.helps.maintenance">Bug fixes and maintenance</string>
-    <!-- Support screen list item: new features. -->
-    <string name="support.helps.features">New features</string>
-    <!-- Support screen list item: keeping Voice free, open source, and ad-free. -->
-    <string name="support.helps.open_source">Keeping Audiobook Player ad-free</string>
-    <!-- Title of the support screen. -->
-    <string name="support.title">Support development</string>
-    <!-- Short label for the launcher shortcut that plays the current book. -->
-    <string name="shortcut.play_current.short_label">Play current</string>
-    <!-- Content description for opening the sleep timer. -->
-    <string name="sleep_timer.action.open">Sleep-Timer</string>
-    <!-- Content description for decreasing the sleep timer duration. -->
-    <string name="sleep_timer.dialog.action.decrement">Shorter</string>
-    <!-- Content description for increasing the sleep timer duration. -->
-    <string name="sleep_timer.dialog.action.increment">Longer</string>
-    <!-- Title of the sleep timer dialog. -->
-    <string name="sleep_timer.dialog.title">Sleep timer</string>
-    <!-- Settings row for the open source attribution. -->
-    <string name="settings.attribution.title">Open Source Attribution</string>
-    <!-- Settings row description for the open source attribution. -->
-    <string name="settings.attribution.summary">This app is based on the Voice open source project (https://github.com/PaulWoitaschek/Voice), licensed under Apache 2.0. Thanks to Paul Woitaschek and all contributors.</string>
-    <!-- Home button label for the playback screen. -->
-    <string name="common.action.home">Home</string>
-    <!-- Settings row for developer info with build timestamp. -->
-    <string name="settings.developer_info.title">Developer Info</string>
-    <!-- Settings row description for developer info. %1$s is the build timestamp. -->
-    <string name="settings.developer_info.summary">Developed by: Jinn\nBuild time: %1$s</string>
+    <!-- 选择有声书文件结构方式的标题。 -->
+    <string name="folder.type.title">您的文件是如何组织的？</string>
+    <!-- 已完成书籍的书库分类标题。 -->
+    <string name="library.category.completed.title">已完成</string>
+    <!-- 正在收听书籍的书库分类标题。 -->
+    <string name="library.category.current.title">正在收听</string>
+    <!-- 尚未开始书籍的书库分类标题。 -->
+    <string name="library.category.not_started.title">未开始</string>
+    <!-- 添加第一本有声书之前显示的书库空状态提示。 -->
+    <string name="library.empty.add_first_book">添加您的有声书文件夹，这样就可以开始收听了！</string>
+    <!-- 管理有声书文件夹的页面和列表标题。 -->
+    <string name="library.folders.title">有声书文件夹</string>
+    <!-- 显示旧有声书文件夹入口已迁移的一次性对话框标题。 -->
+    <string name="library.folders.moved.dialog.title">有声书文件夹已迁移</string>
+    <!-- 显示旧有声书文件夹入口已迁移的一次性对话框正文。 -->
+    <string name="library.folders.moved.dialog.message">您现在可以在“设置”中管理有声书文件夹。</string>
+    <!-- 用于搜索书籍的提示文本。 -->
+    <string name="library.search.hint">您在找什么？</string>
+    <!-- 授予存储权限绕过方案的按钮文案。 -->
+    <string name="library.storage_permission_bug.action">授予权限</string>
+    <!-- 解释为何需要存储权限绕过方案的文案。 -->
+    <string name="library.storage_permission_bug.message">在某些设备上，系统应用缺少访问外部存储所需的权限。对于有声书播放器读取您的有声书，这项访问是必需的。</string>
+    <!-- 解释所需存储权限绕过方案的卡片标题。 -->
+    <string name="library.storage_permission_bug.title">需要权限</string>
+    <!-- 最近播放有声书的媒体浏览器标题。 -->
+    <string name="media_session.library.recent">最近播放</string>
+    <!-- 所有有声书的媒体浏览器根标题。 -->
+    <string name="media_session.library.root">全部有声书</string>
+    <!-- 进入下一步引导的按钮文案。 -->
+    <string name="onboarding.action.next">下一步</string>
+    <!-- 关闭统计收集时继续的按钮文案。 -->
+    <string name="onboarding.analytics_consent.action.disable">不启用统计</string>
+    <!-- 启用统计收集时继续的按钮文案。 -->
+    <string name="onboarding.analytics_consent.action.enable">启用统计</string>
+    <!-- 从统计同意页打开隐私政策的链接文案。 -->
+    <string name="onboarding.analytics_consent.action.privacy_policy">隐私政策</string>
+    <!-- 引导流程中的统计同意说明。 -->
+    <string name="onboarding.analytics_consent.description">允许我们收集匿名使用数据，以帮助改进应用。您可以稍后在设置中更改此选项。</string>
+    <!-- 引导流程中的统计同意标题。 -->
+    <string name="onboarding.analytics_consent.title">帮助改进有声书播放器</string>
+    <!-- 结束引导并开始播放的按钮文案。 -->
+    <string name="onboarding.completion.action.start_listening">开始收听</string>
+    <!-- 引导完成页副标题。 -->
+    <string name="onboarding.completion.subtitle">您的第一本有声书已经准备好播放。祝您使用有声书播放器旅途愉快！</string>
+    <!-- 引导完成页标题。 -->
+    <string name="onboarding.completion.title">一切就绪！</string>
+    <!-- 引导中解释文件与文件夹选择的副标题。 -->
+    <string name="onboarding.explanation.subtitle">使用有声书播放器，您可以将书籍作为单个文件添加，也可以按文件夹整理，由您决定！</string>
+    <!-- 引导中解释页标题。 -->
+    <string name="onboarding.explanation.title">您的书库，由您做主</string>
+    <!-- 引导欢迎页副标题。 -->
+    <string name="onboarding.welcome.subtitle">您的随身口袋有声书播放器。让我们开始设置吧。</string>
+    <!-- 引导欢迎页标题。 -->
+    <string name="onboarding.welcome.title">欢迎使用有声书播放器！</string>
+    <!-- 快进播放操作的标签。 -->
+    <string name="playback.action.fast_forward">快进</string>
+    <!-- 暂停音频播放按钮的内容描述。 -->
+    <string name="playback.action.pause">暂停</string>
+    <!-- 开始音频播放按钮的内容描述。 -->
+    <string name="playback.action.play">播放</string>
+    <!-- 在播放和暂停之间切换的控件内容描述。 -->
+    <string name="playback.action.play_pause">播放 / 暂停</string>
+    <!-- 快退播放操作的标签。 -->
+    <string name="playback.action.rewind">快退</string>
+    <!-- 打开电池优化设置的操作标签。 -->
+    <string name="playback.battery_optimization.action">更新</string>
+    <!-- 解释电源限制可能导致播放中断的提示文案。 -->
+    <string name="playback.battery_optimization.rationale">由于您的电源限制，可能会出现播放中断。</string>
+    <!-- 当前正在播放章节的内容描述前缀。 -->
+    <string name="playback.chapter.current.content_description">当前章节</string>
+    <!-- 跳到下一章节或下一曲目的内容描述。 -->
+    <string name="playback.chapter.next">下一曲</string>
+    <!-- 跳到上一章节或上一曲目的内容描述。 -->
+    <string name="playback.chapter.previous">上一曲</string>
+    <!-- 播放期间切换跳过静音的菜单文案。 -->
+    <string name="playback.option.skip_silence">跳过静音</string>
+    <!-- 播放期间切换跳过片头的菜单文案。 -->
+    <string name="playback.option.skip_start">跳过片头</string>
+    <!-- 播放期间切换跳过片尾的菜单文案。 -->
+    <string name="playback.option.skip_end">跳过片尾</string>
+    <!-- 调整音量增益的菜单和对话框标题。 -->
+    <string name="playback.option.volume_boost">音量增强</string>
+    <!-- 播放速度控制的标题和内容描述。 -->
+    <string name="playback.speed.title">播放速度</string>
+    <!-- 取消反馈的负按钮。 -->
+    <string name="review.feedback.action.cancel" tools:ignore="UnusedResources">取消</string>
+    <!-- 发送反馈的正按钮。 -->
+    <string name="review.feedback.action.send" tools:ignore="UnusedResources">发送反馈</string>
+    <!-- 询问不满意用户反馈的对话框文案。 -->
+    <string name="review.feedback.message" tools:ignore="UnusedResources">能告诉我们哪里出了问题吗？感谢您的反馈，它有助于我们改进体验。</string>
+    <!-- 询问不满意用户反馈的对话框标题。 -->
+    <string name="review.feedback.title" tools:ignore="UnusedResources">很抱歉听到这个！</string>
+    <!-- 关闭评分请求的负按钮。 -->
+    <string name="review.request.action.dismiss" tools:ignore="UnusedResources">不了，谢谢</string>
+    <!-- 打开评分流程的正按钮。 -->
+    <string name="review.request.action.rate" tools:ignore="UnusedResources">立即评分</string>
+    <!-- 询问满意用户为应用评分的对话框文案。 -->
+    <string name="review.request.message" tools:ignore="UnusedResources">您的反馈对我们很重要！如果您有时间，请给我们评分并分享您的体验。这有助于我们持续改进，并提供更好的收听体验。</string>
+    <!-- 询问满意用户为应用评分的对话框标题。 -->
+    <string name="review.request.title" tools:ignore="UnusedResources">喜欢有声书播放器吗？</string>
+    <!-- 显示应用版本的设置条目。 -->
+    <string name="settings.about.app_version.title">应用版本</string>
+    <!-- 打开设置的标题和内容描述。 -->
+    <string name="settings.action.open">设置</string>
+    <!-- 统计同意设置项的描述。 -->
+    <string name="settings.analytics_consent.description">允许收集匿名使用数据，以帮助改进应用</string>
+    <!-- 统计同意设置项的标题。 -->
+    <string name="settings.analytics_consent.title">统计</string>
+    <!-- 用于选择应用配色方案的设置标题。 -->
+    <string name="settings.appearance.color_scheme.title">配色方案</string>
+    <!-- 将 Android 动态颜色作为应用配色方案的选项。 -->
+    <string name="settings.appearance.color_scheme.dynamic">动态颜色</string>
+    <!-- Android 动态颜色的说明。 -->
+    <string name="settings.appearance.color_scheme.dynamic.summary">使用您的壁纸和系统主题中的颜色。</string>
+    <!-- 将 Voice 蓝作为应用配色方案的选项。 -->
+    <string name="settings.appearance.color_scheme.voice_blue">Voice 蓝</string>
+    <!-- 强制深色模式的选项。 -->
+    <string name="settings.appearance.theme.dark">深色</string>
+    <!-- 跟随系统浅色或深色设置的选项。 -->
+    <string name="settings.appearance.theme.follow_system">跟随系统</string>
+    <!-- 强制浅色模式的选项。 -->
+    <string name="settings.appearance.theme.light">浅色</string>
+    <!-- 选择亮色或暗色模式行为的设置标题。 -->
+    <string name="settings.appearance.theme.title">主题</string>
+    <!-- 选择自动睡眠定时器结束时间的标签。 -->
+    <string name="settings.auto_sleep_timer.end.label" weblate-flags="max-length:16">设置结束时间</string>
+    <!-- 选择自动睡眠定时器开始时间的标签。 -->
+    <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">设置开始时间</string>
+    <!-- 自动睡眠定时器时间窗口的设置说明。 -->
+    <string name="settings.auto_sleep_timer.summary">当播放在 %1$s 到 %2$s 之间开始时，自动启动睡眠定时器</string>
+    <!-- 自动启动睡眠定时器的设置标题。 -->
+    <string name="settings.auto_sleep_timer.title">自动睡眠定时器</string>
+    <!-- 有声书文件夹设置项的说明。 -->
+    <string name="settings.library.folders.summary">管理用于扫描有声书的文件夹</string>
+    <!-- 切换书库网格布局的设置项。 -->
+    <string name="settings.library.use_grid.title">使用网格布局</string>
+    <!-- 播放恢复时自动快退的设置标题。 -->
+    <string name="settings.playback.auto_rewind.title">自动快退</string>
+    <!-- 控制快进和快退时长的设置标题。 -->
+    <string name="settings.playback.seek_time.title">跳过时长</string>
+    <!-- 控制跳过片头时长的设置标题。 -->
+    <string name="settings.playback.skip_start.title">跳过片头时长</string>
+    <!-- 控制跳过片尾时长的设置标题。 -->
+    <string name="settings.playback.skip_end.title">跳过片尾时长</string>
+    <!-- 打开常见问题页面的设置支持项。 -->
+    <string name="settings.support.faq.title">常见问题</string>
+    <!-- 获取帮助的设置支持项。 -->
+    <string name="settings.support.get_support.title">获取帮助</string>
+    <!-- 协助翻译应用的设置支持项。 -->
+    <string name="settings.support.help_translating.title">帮助翻译有声书播放器</string>
+    <!-- 报告问题的设置支持项。 -->
+    <string name="settings.support.report_issue.title">报告问题</string>
+    <!-- 打开捐赠/支持页面的设置说明。 -->
+    <string name="settings.support.support_voice.summary">捐赠有助于持续维护有声书播放器</string>
+    <!-- 打开捐赠/支持页面的设置项。 -->
+    <string name="settings.support.support_voice.title">支持开发</string>
+    <!-- 建议产品想法的设置支持项。 -->
+    <string name="settings.support.suggest_idea.title">提出建议</string>
+    <!-- 通过 Ko-fi 捐赠的支持页面操作。 -->
+    <string name="support.action.donate_kofi">在 Ko-fi 上捐赠</string>
+    <!-- 解释为什么支持有用的支持页面文案。 -->
+    <string name="support.description.maintenance">有声书播放器是免费、开源的，由一位开发者维护。</string>
+    <!-- 主说明下方的支持页面文案。 -->
+    <string name="support.description.maintenance_subtitle">捐赠有助于支持持续的维护和开发。</string>
+    <!-- 支持页面中列出捐赠用途的标题。 -->
+    <string name="support.helps.title">支持将用于</string>
+    <!-- 支持页面列表项：错误修复和持续维护。 -->
+    <string name="support.helps.maintenance">错误修复和维护</string>
+    <!-- 支持页面列表项：新功能。 -->
+    <string name="support.helps.features">新功能</string>
+    <!-- 支持页面列表项：保持 Voice 免费、开源且无广告。 -->
+    <string name="support.helps.open_source">保持有声书播放器无广告</string>
+    <!-- 支持页面标题。 -->
+    <string name="support.title">支持开发</string>
+    <!-- 启动器快捷方式中播放当前书籍的简短标签。 -->
+    <string name="shortcut.play_current.short_label">播放当前</string>
+    <!-- 打开睡眠定时器的内容描述。 -->
+    <string name="sleep_timer.action.open">睡眠定时器</string>
+    <!-- 缩短睡眠定时器时长的内容描述。 -->
+    <string name="sleep_timer.dialog.action.decrement">缩短</string>
+    <!-- 延长睡眠定时器时长的内容描述。 -->
+    <string name="sleep_timer.dialog.action.increment">延长</string>
+    <!-- 睡眠定时器对话框标题。 -->
+    <string name="sleep_timer.dialog.title">睡眠定时器</string>
+    <!-- 开源声明设置项。 -->
+    <string name="settings.attribution.title">开源声明</string>
+    <!-- 开源声明设置项的说明。 -->
+    <string name="settings.attribution.summary">本应用基于 Voice 开源项目（https://github.com/PaulWoitaschek/Voice），采用 Apache 2.0 许可证。感谢 Paul Woitaschek 和所有贡献者。</string>
+    <!-- 播放界面主页按钮标签。 -->
+    <string name="common.action.home">主页</string>
+    <!-- 开发者信息设置项。 -->
+    <string name="settings.developer_info.title">二次开发信息</string>
+    <!-- 开发者信息说明，%1$s 为构建时间。 -->
+    <string name="settings.developer_info.summary">开发者：Jinn\n构建时间：%1$s</string>
+    <!-- 检查更新按钮文本。 -->
+    <string name="settings_check_update_button">检查更新</string>
+    <!-- 打开项目按钮文本。 -->
+    <string name="settings_attribution_open_button">访问项目</string>
 </resources>
