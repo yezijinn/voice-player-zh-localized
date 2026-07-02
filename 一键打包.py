@@ -24,6 +24,7 @@ import sys
 import datetime
 import glob
 import logging
+import threading
 from typing import List
 
 
@@ -91,6 +92,66 @@ def setup_logger() -> logging.Logger:
 
 # 全局日志对象
 logger = setup_logger()
+
+
+# ==================== 工具函数 ====================
+
+def decode_output(data: bytes, encoding: str = "utf-8") -> str:
+    """
+    解码subprocess输出的字节流
+    处理 Windows 可能出现的编码问题（GBK/UTF-8）
+    
+    Args:
+        data: 字节数据
+        encoding: 编码格式，默认为utf-8
+        
+    Returns:
+        str: 解码后的字符串
+    """
+    if not data:
+        return ""
+    
+    # 尝试按指定编码解码
+    try:
+        return data.decode(encoding)
+    except UnicodeDecodeError:
+        # 如果失败，尝试其他编码
+        for alt_encoding in ["gbk", "gb2312", "cp936", "utf-8", "latin1"]:
+            try:
+                return data.decode(alt_encoding, errors="replace")
+            except:
+                continue
+        # 最终fallback
+        return data.decode("utf-8", errors="replace")
+
+
+def stream_reader(stream, logger_func, stream_writer):
+    """
+    异步流读取器（线程专用）
+    实时读取子进程输出，解码后写入控制台和日志
+    
+    Args:
+        stream: 子进程的 stdout 或 stderr 流
+        logger_func: 日志记录函数 (logger.info 或 logger.error)
+        stream_writer: 输出目标 (sys.stdout 或 sys.stderr)
+    """
+    # 使用 iter(readline, sentinel) 模式高效读取
+    for raw_line in iter(stream.readline, b''):
+        if not raw_line:
+            break
+        
+        # 解码字节流
+        try:
+            decoded = decode_output(raw_line).rstrip('\r\n')
+        except:
+            decoded = str(raw_line)
+        
+        if decoded.strip():
+            # 实时输出到控制台
+            print(decoded, file=stream_writer)
+            
+            # 实时写入日志文件
+            logger_func(decoded)
 
 
 # ==================== 依赖检查函数 ====================
@@ -329,7 +390,7 @@ def get_build_environment() -> dict:
 
 def build_apk(jdk_bin: str, gradle_bin: str) -> None:
     """
-    编译 APK
+    编译 APK (多线程异步版本)
     使用本地 Gradle 直接编译，完全绕过 wrapper
     
     Args:
@@ -358,20 +419,55 @@ def build_apk(jdk_bin: str, gradle_bin: str) -> None:
     ]
     
     logger.debug(f"执行命令: {' '.join(cmd)}")
+    logger.info("")
+    logger.info("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+    logger.info("编译输出（实时流式显示）:")
+    logger.info("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
     
-    # 执行编译
-    result = subprocess.run(
+    # 启动子进程
+    process = subprocess.Popen(
         cmd,
         cwd=BUILD_DIR,
         env=env,
-        capture_output=False,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        bufsize=0,
+        text=False
     )
     
-    if result.returncode != 0:
+    # 创建并启动两个线程，分别读取 stdout 和 stderr
+    t_stdout = threading.Thread(
+        target=stream_reader, 
+        args=(process.stdout, logger.info, sys.stdout)
+    )
+    t_stderr = threading.Thread(
+        target=stream_reader, 
+        args=(process.stderr, logger.error, sys.stderr)
+    )
+    
+    # 设置为守护线程
+    t_stdout.daemon = True
+    t_stderr.daemon = True
+    
+    # 启动线程
+    t_stdout.start()
+    t_stderr.start()
+    
+    # 等待进程结束
+    return_code = process.wait()
+    
+    # 等待线程完成（确保最后一部分输出也被写入日志）
+    t_stdout.join(timeout=5.0)
+    t_stderr.join(timeout=5.0)
+    
+    # 检查返回码
+    if return_code != 0:
         logger.error("✗ 编译失败！")
+        logger.error(f"Gradle 返回码: {return_code}")
         logger.error("请检查上方错误信息。")
         sys.exit(1)
     
+    logger.info("")
     logger.info("✓ 编译成功")
 
 
@@ -426,12 +522,12 @@ def print_banner() -> None:
     banner = """
 ╔══════════════════════════════════════════════════════════════════════════╗
 ║                                                                          ║
-║              ╔══════════════════════════════════════════╗               ║
-║              ║        有声书播放器 - 一键打包脚本          ║               ║
-║              ╚══════════════════════════════════════════╝               ║
+║              ╔══════════════════════════════════════════╗                ║
+║              ║        有声书播放器   一键打包脚本            ║                ║
+║              ╚══════════════════════════════════════════╝                ║
 ║                                                                          ║
-║    ✓ 所有依赖安装在项目本地，不联网下载                                  ║
-║    ✓ 编译日志将保存到 build.log 文件                                     ║
+║    ✓ 所有依赖安装在项目本地，不联网下载                                        ║
+║    ✓ 编译日志将保存到 build.log 文件                                        ║
 ║                                                                          ║
 ╚══════════════════════════════════════════════════════════════════════════╝
 """
@@ -448,16 +544,16 @@ def print_summary(apk_path: str, elapsed_time: float) -> None:
     """
     summary = f"""
 ╔══════════════════════════════════════════════════════════════════════════╗
-║                              打包完成！                                  ║
+║                              打包完成！                                    ║
 ╠══════════════════════════════════════════════════════════════════════════╣
 ║                                                                          ║
-║  📦 APK 文件:                                                            ║
-║      {apk_path:<64} ║
+║  📦 APK 文件:                                                             ║
+║      {apk_path:<64}                                                      ║
 ║                                                                          ║
-║  📄 编译日志:                                                            ║
-║      {LOG_FILE:<64} ║
+║  📄 编译日志:                                                              ║
+║      {LOG_FILE:<64}                                                      ║
 ║                                                                          ║
-║  ⏱️  构建耗时: {elapsed_time:>6.2f} 秒                                                     ║
+║  ⏱️  构建耗时: {elapsed_time:>6.2f} 秒                                     ║  
 ║                                                                          ║
 ╚══════════════════════════════════════════════════════════════════════════╝
 """
